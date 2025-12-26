@@ -9,8 +9,8 @@ export default function Home() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">José García</h1>
-          <p className="text-2xl md:text-3xl mb-8 text-blue-100">Programador Multiplataforma</p>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">José Gellida</h1>
+          <p className="text-2xl md:text-3xl mb-8 text-blue-100">Programador Fullstack</p>
           <p className="text-xl mb-12 max-w-3xl mx-auto text-blue-50">
             Bienvenido a mi portafolio. Explora mis proyectos, habilidades técnicas 
             y experiencia en desarrollo frontend, backend y móvil.
