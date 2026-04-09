@@ -4,7 +4,7 @@
       "HttpErrorCodeReturnedEquals": "404"
     },
     "Redirect": {
-      "HostName": "",
+      "HostName": "www.josegellida.com",
       "ReplaceKeyPrefixWith": "#!/"
     }
   }

@@ -12,7 +12,7 @@ Portafolio profesional desarrollado con tecnologías modernas y best practices
 [![Vite](https://img.shields.io/badge/Vite-7.2-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-[🌐 Ver Demo](https://josegellida.com) · [📧 Contacto](mailto:jose@josegc.dev) · [🐙 GitHub](https://github.com/gellida)
+[🌐 Ver Demo](https://www.josegellida.com) · [📧 Contacto](mailto:jose@josegc.dev) · [🐙 GitHub](https://github.com/gellida)
 
 </div>
 
@@ -95,7 +95,7 @@ src/
 
 ### Información Personal
 
-Actualiza tu información en:
+Más información en:
 - [src/pages/About/About.tsx](src/pages/About/About.tsx) - Biografía y experiencia
 - [src/pages/Contact/Contact.tsx](src/pages/Contact/Contact.tsx) - Datos de contacto
 - [src/layout/Footer.tsx](src/layout/Footer.tsx) - Enlaces de redes sociales
@@ -121,7 +121,7 @@ Actualiza tu información en:
 
 *Programador Multiplataforma | Full Stack Developer*
 
-[![Website](https://img.shields.io/badge/Website-josegellida.com-0891b2?style=for-the-badge&logo=google-chrome&logoColor=white)](https://josegellida.com)
+[![Website](https://img.shields.io/badge/Website-www.josegellida.com-0891b2?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.josegellida.com)
 [![GitHub](https://img.shields.io/badge/GitHub-gellida-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gellida)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-josegellida-0077b5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jose-gellida)
 [![Email](https://img.shields.io/badge/Email-gellida.dev@gmail.com-ea4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:gellida.dev@gmail.com)
