@@ -40,7 +40,6 @@ jobs:
         run: |
           aws s3api put-bucket-website --bucket portoflio-demo --website-configuration file://s3-website-config.json
 
-      - name: Invalidate CloudFront cache (opcional)
-        if: false  # Cambia a true si usas CloudFront
+      - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
