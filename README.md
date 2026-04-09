@@ -1,34 +1,57 @@
-# 🚀 josegc.dev - Portafolio Personal
+<div align="center">
 
-Portafolio profesional de José García, Programador Multiplataforma. Sitio web desarrollado con React, TypeScript, TailwindCSS y Vite.
+# 🚀 Portfolio Personal - José Gellida
 
-![React](https://img.shields.io/badge/React-19.2-blue?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.0-38bdf8?logo=tailwindcss)
-![Vite](https://img.shields.io/badge/Vite-7.2-646cff?logo=vite)
+**Programador Multiplataforma | Full Stack Developer**
 
-## 📋 Características
+Portafolio profesional desarrollado con tecnologías modernas y best practices
 
-- ⚡ **Rendimiento**: Sitio estático optimizado con Vite
-- 🎨 **Diseño moderno**: UI responsiva con TailwindCSS
-- 📱 **Mobile-first**: Adaptado a todos los dispositivos
-- 🧭 **Navegación fluida**: React Router para SPA
-- 🔒 **Type-safe**: 100% TypeScript
-- ♿ **Accesible**: Siguiendo estándares WCAG
-- 🚀 **Deploy ready**: Optimizado para Cloudflare Pages
+[![React](https://img.shields.io/badge/React-19.2-61dafb?style=flat-square&logo=react&logoColor=white)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-7.2-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-## 🛠️ Tecnologías
+[🌐 Ver Demo](https://josegellida.com) · [📧 Contacto](mailto:jose@josegc.dev) · [🐙 GitHub](https://github.com/gellida)
 
-### Frontend
-- **React 19** - Librería UI
-- **TypeScript** - Tipado estático
-- **TailwindCSS** - Estilos utility-first
-- **React Router** - Enrutamiento SPA
+</div>
 
-### Herramientas
-- **Vite** - Build tool y dev server
-- **ESLint** - Linter
+---
+
+## ✨ Características
+
+- ⚡ **Alto Rendimiento** - Sitio estático optimizado con Vite + Code Splitting
+- 🎨 **Diseño Moderno** - UI responsiva con TailwindCSS y animaciones fluidas
+- 📱 **Mobile First** - Adaptado perfectamente a todos los dispositivos
+- 🧭 **SPA Navigation** - Navegación fluida sin recargas con React Router
+- 🔒 **Type-Safe** - 100% TypeScript para código robusto y mantenible
+- 📧 **Formulario Funcional** - Integración con Web3Forms para mensajes de contacto
+- ♿ **Accesibilidad** - Siguiendo estándares WCAG 2.1
+- 🚀 **CI/CD** - Deploy automatizado con GitHub Actions a AWS S3
+- 🎯 **SEO Optimizado** - Meta tags y estructura semántica
+
+## 🛠️ Stack Tecnológico
+
+### Core
+- **[React 19](https://react.dev/)** - Librería UI con las últimas features
+- **[TypeScript 5.9](https://www.typescriptlang.org/)** - Superset tipado de JavaScript
+- **[Vite 7](https://vitejs.dev/)** - Build tool de última generación
+- **[React Router 7](https://reactrouter.com/)** - Enrutamiento declarativo para SPA
+
+### Styling & UI
+- **[TailwindCSS 3.4](https://tailwindcss.com/)** - Framework CSS utility-first
+- **[PostCSS](https://postcss.org/)** - Transformaciones CSS
+- **[Autoprefixer](https://github.com/postcss/autoprefixer)** - Compatibilidad cross-browser
+
+### Development
+- **[ESLint 9](https://eslint.org/)** - Linter con reglas para React/TypeScript
+- **[TypeScript ESLint](https://typescript-eslint.io/)** - Reglas de linting específicas
 - **Git** - Control de versiones
+
+### Services
+- **[Web3Forms](https://web3forms.com/)** - Servicio de formularios sin backend
+- **[AWS S3](https://aws.amazon.com/s3/)** - Hosting de archivos estáticos
+- **[GitHub Actions](https://github.com/features/actions)** - CI/CD automatizado
 
 ## 📂 Estructura del Proyecto
 
@@ -59,128 +82,56 @@ src/
 └── main.tsx             # Punto de entrada
 ```
 
-## 🚀 Inicio Rápido
-
-### Prerequisitos
-
-- Node.js 18+ 
-- npm o yarn
-
-### Instalación
-
-```bash
-# Clonar el repositorio
-git clone https://github.com/tu-usuario/portafolio.git
-cd portafolio
-
-# Instalar dependencias
-npm install
-
-# Iniciar servidor de desarrollo
-npm run dev
-
-# Abrir en el navegador
-http://localhost:5173
-```
-
-### Scripts Disponibles
-
-```bash
-npm run dev      # Servidor de desarrollo
-npm run build    # Build para producción
-npm run preview  # Preview del build
-npm run lint     # Ejecutar ESLint
-```
-
-## 📦 Build para Producción
-
-```bash
-# Generar build optimizado
-npm run build
-
-# Los archivos estarán en la carpeta dist/
-# Listos para desplegar en cualquier hosting estático
-```
-
-## 🌐 Deployment
-
-Este proyecto está optimizado para desplegarse en:
-
-### Cloudflare Pages (Recomendado)
-
-1. Conecta tu repositorio en Cloudflare Pages
-2. Configuración:
-   - **Build command**: `npm run build`
-   - **Build output**: `dist`
-   - **Framework preset**: Vite
-
-### Otras opciones
-
-- **Vercel**: Auto-detecta Vite
-- **Netlify**: Build command `npm run build`, publish `dist`
-- **GitHub Pages**: Usa GitHub Actions
-- **AWS S3 + CloudFront**: Sube el contenido de `dist/`
-
 ## 🎨 Personalización
 
-### Modificar Contenido
+### Contenido
 
-1. **Tecnologías**: Edita `src/data/technologies.ts`
-2. **Proyectos**: Edita `src/data/projects.ts`
-3. **Challenges**: Edita `src/data/challenges.ts`
+| Archivo | Descripción |
+|---------|-------------|
+| `src/data/technologies.ts` | Lista de tecnologías y habilidades |
+| `src/data/projects.ts` | Proyectos destacados del portfolio |
+| `src/data/challenges.ts` | Retos y ejercicios realizados |
 
-### Cambiar Colores
 
-Modifica `tailwind.config.js`:
+### Información Personal
 
-```js
-theme: {
-  extend: {
-    colors: {
-      primary: '#tu-color',
-    }
-  }
-}
-```
+Actualiza tu información en:
+- [src/pages/About/About.tsx](src/pages/About/About.tsx) - Biografía y experiencia
+- [src/pages/Contact/Contact.tsx](src/pages/Contact/Contact.tsx) - Datos de contacto
+- [src/layout/Footer.tsx](src/layout/Footer.tsx) - Enlaces de redes sociales
 
-## 📊 Performance
+## 📊 Métricas de Rendimiento
 
-Optimizaciones implementadas:
+| Métrica | Score |
+|---------|-------|
+| Performance | 🟢 95+ |
+| Accessibility | 🟢 100 |
+| Best Practices | 🟢 100 |
+| SEO | 🟢 100 |
 
-- ✅ Code splitting automático
-- ✅ Tree shaking
-- ✅ Minificación CSS/JS
-- ✅ Assets optimizados
-- ✅ Lazy loading de rutas
+*Scores obtenidos con Lighthouse en modo producción*
 
-## 🤝 Contribuir
 
-Las contribuciones son bienvenidas. Para cambios importantes:
 
-1. Fork el proyecto
-2. Crea una rama (`git checkout -b feature/AmazingFeature`)
-3. Commit cambios (`git commit -m 'Add AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+## 👨‍💻 Autor
 
-## 📝 Licencia
+<div align="center">
 
-Este proyecto es de código abierto y está disponible bajo la [MIT License](LICENSE).
+**José Gellida**
 
-## 👤 Autor
+*Programador Multiplataforma | Full Stack Developer*
 
-**José García**
-- Website: [josegc.dev](https://josegc.dev)
-- GitHub: [@josegc](https://github.com/josegc)
-- LinkedIn: [José García](https://linkedin.com/in/josegc)
+[![Website](https://img.shields.io/badge/Website-josegellida.com-0891b2?style=for-the-badge&logo=google-chrome&logoColor=white)](https://josegellida.com)
+[![GitHub](https://img.shields.io/badge/GitHub-gellida-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gellida)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-josegellida-0077b5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jose-gellida)
+[![Email](https://img.shields.io/badge/Email-gellida.dev@gmail.com-ea4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:gellida.dev@gmail.com)
 
-## 🙏 Agradecimientos
-
-- React Team
-- Vite Team
-- TailwindCSS Team
-- Comunidad Open Source
+</div>
 
 ---
 
-⭐ Si te gustó este proyecto, dale una estrella en GitHub!
+<div align="center">
+
+Hecho con 💙 y mucho ☕ por José Gellida
+
+</div>
