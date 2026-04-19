@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import Section from '../../components/Section';
+import { trackEvent } from '../../hooks/useAnalytics';
 
 interface FormData {
   name: string;
@@ -9,6 +10,7 @@ interface FormData {
 }
 
 export default function Contact() {
+  const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -31,8 +33,14 @@ export default function Contact() {
     setStatus('loading');
     setErrorMessage('');
 
+    if (!web3FormsAccessKey) {
+      setStatus('error');
+      setErrorMessage('El formulario no esta configurado. Define VITE_WEB3FORMS_ACCESS_KEY antes de desplegar.');
+      return;
+    }
+
     // Validación básica
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!formData.name || !formData.email || !formData.number || !formData.message) {
       setStatus('error');
       setErrorMessage('Por favor completa todos los campos');
       return;
@@ -46,9 +54,10 @@ export default function Contact() {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+          access_key: web3FormsAccessKey,
           name: formData.name,
           email: formData.email,
+          phone: formData.number,
           message: formData.message,
           subject: `Nuevo mensaje de ${formData.name} desde Portfolio`,
         })
@@ -57,6 +66,7 @@ export default function Contact() {
       const data = await response.json();
 
       if (data.success) {
+        trackEvent('contact_form_submit');
         setStatus('success');
         setFormData({ name: '', email: '', number: '', message: '' });
         setTimeout(() => setStatus('idle'), 5000);

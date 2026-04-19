@@ -1,3 +1,5 @@
+import { trackEvent } from '../hooks/useAnalytics';
+
 export default function Footer() {
   return (
     <footer className="bg-gray-800 text-white py-8 mt-auto">
@@ -8,13 +10,16 @@ export default function Footer() {
             <p className="text-gray-400">Programador Fullstack</p>
           </div>
           <div className="flex space-x-6">
-            <a href="https://github.com/gellida" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition">
+            <a href="https://github.com/gellida" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition"
+              onClick={() => trackEvent('outbound_click', { url: 'https://github.com/gellida', label: 'GitHub' })}>
               GitHub
             </a>
-            <a href="https://linkedin.com/in/jose-gellida" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition">
+            <a href="https://linkedin.com/in/jose-gellida" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition"
+              onClick={() => trackEvent('outbound_click', { url: 'https://linkedin.com/in/jose-gellida', label: 'LinkedIn' })}>
               LinkedIn
             </a>
-            <a href="mailto:gellida.dev@gmail.com" className="hover:text-blue-400 transition">
+            <a href="mailto:gellida.dev@gmail.com" className="hover:text-blue-400 transition"
+              onClick={() => trackEvent('outbound_click', { url: 'mailto:gellida.dev@gmail.com', label: 'Email' })}>
               Email
             </a>
           </div>

@@ -1,4 +1,5 @@
 import type { Project } from '../data/projects';
+import { trackEvent } from '../hooks/useAnalytics';
 
 interface ProjectCardProps {
   project: Project;
@@ -30,6 +31,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               target="_blank" 
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+              onClick={() => trackEvent('select_project', { project_name: project.title, link_type: 'github' })}
             >
               Ver en GitHub →
             </a>
@@ -40,6 +42,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               target="_blank" 
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+              onClick={() => trackEvent('select_project', { project_name: project.title, link_type: 'demo' })}
             >
               Ver Demo →
             </a>
