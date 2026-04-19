@@ -11,6 +11,7 @@
     "deploy": "npm run build && aws s3 sync dist/ s3://portoflio-demo --delete"
   },
   "dependencies": {
+    "aws-rum-web": "^2.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.11.0"

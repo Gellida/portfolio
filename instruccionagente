@@ -26,7 +26,7 @@ No introduzcas patrones si no están justificados
 
 Cada archivo debe tener una responsabilidad clara
 
-Si un archivo hace más de una cosa, está mal
+Si un archivo hace más de dos cosas, está mal
 
 4. Código como comunicación
 
