@@ -2,9 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logo_j.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>José Gellida | Programador Multiplataforma</title>
+    <script>
+      (function () {
+        try {
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const shouldUseDark = stored ? stored === 'dark' : prefersDark;
+          if (shouldUseDark) document.documentElement.classList.add('dark');
+        } catch {
+          // ignore
+        }
+      })();
+    </script>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E84ZPZKCFC"></script>
     <script>

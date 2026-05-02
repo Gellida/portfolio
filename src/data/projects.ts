@@ -6,28 +6,16 @@ export interface Project {
   image?: string;
   link?: string;
   github?: string;
+  detailsPath?: string;
 }
 
 export const projects: Project[] = [
+  
   {
     id: '1',
-    title: 'Sistema de Gestión Web',
-    description: 'Aplicación web full-stack para gestión de inventarios con panel de administración.',
-    technologies: ['React', 'TypeScript', 'TailwindCSS', 'Node.js', 'PostgreSQL'],
-    github: 'https://github.com'
-  },
-  {
-    id: '2',
-    title: 'App Mobile de Delivery',
-    description: 'Aplicación móvil multiplataforma para pedidos y entregas en tiempo real.',
-    technologies: ['React Native', 'TypeScript', 'Firebase', 'Redux'],
-    github: 'https://github.com'
-  },
-  {
-    id: '3',
-    title: 'Dashboard Analytics',
-    description: 'Dashboard interactivo para visualización de datos y métricas de negocio.',
-    technologies: ['Next.js', 'Chart.js', 'TailwindCSS', 'Python'],
-    github: 'https://github.com'
+    title: 'Portafolio Web Personal',
+    description: 'Sitio web de portafolio con routing, diseño responsive y seguimiento de eventos para mostrar proyectos y experiencia.',
+    technologies: ['React', 'TypeScript', 'Vite', 'TailwindCSS', 'React Router', 'Lucide React', 'ESLint'],
+    detailsPath: '/projects/portafolio-web'
   }
 ];

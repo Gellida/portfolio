@@ -1,4 +1,5 @@
 import type { Project } from '../data/projects';
+import { Link } from 'react-router-dom';
 import { trackEvent } from '../hooks/useAnalytics';
 
 interface ProjectCardProps {
@@ -7,30 +8,54 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+    <div className="group rounded-2xl overflow-hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-indigo-500/40 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md">
       {project.image && (
-        <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600"></div>
+        <div className="h-48 bg-gradient-to-br from-indigo-600 to-emerald-500"></div>
+      )}
+      {!project.image && (
+        <div className="h-48 border-b border-slate-200 dark:border-slate-700 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center p-4 text-center">
+          <div>
+           <span className="text-slate-500 dark:text-slate-500 flex flex-col  "> 
+                    <img
+                        src={import.meta.env.BASE_URL + 'portadawebclaro.png'}
+                        alt="Foto de Jose Gellida"
+                        className="w-full h-full object-cover  "
+                        loading="lazy"
+                      />
+            </span>
+
+          </div>
+        </div>
       )}
       <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-        <p className="text-gray-600 mb-4">{project.description}</p>
+        <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50 mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{project.title}</h3>
+        <p className="text-slate-500 dark:text-slate-400 mb-4">{project.description}</p>
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.map((tech) => (
             <span 
               key={tech} 
-              className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
+              className="px-2 py-1 text-xs rounded-md bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200"
             >
               {tech}
             </span>
           ))}
         </div>
         <div className="flex gap-4">
+          {project.detailsPath && (
+            <Link
+              to={project.detailsPath}
+              className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium hover:underline"
+              onClick={() => trackEvent('select_project', { project_name: project.title, link_type: 'details' })}
+            >
+              Ver detalles {'->'}
+            </Link>
+          )}
           {project.github && (
             <a 
               href={project.github} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+              className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium hover:underline"
               onClick={() => trackEvent('select_project', { project_name: project.title, link_type: 'github' })}
             >
               Ver en GitHub →
@@ -41,7 +66,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               href={project.link} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+              className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium hover:underline"
               onClick={() => trackEvent('select_project', { project_name: project.title, link_type: 'demo' })}
             >
               Ver Demo →

@@ -6,22 +6,6 @@ export interface Challenge {
   link?: string;
 }
 
-export const challenges: Challenge[] = [
-  {
-    id: '1',
-    title: 'Frontend Mentor - E-commerce Product Page',
-    platform: 'Frontend Mentor',
-    description: 'Challenge de página de producto con carrito de compras interactivo.',
-    link: '#'
-  },
-  {
-    id: '2',
-    title: 'LeetCode - Top 100 Liked',
-    platform: 'LeetCode',
-    description: 'Resolución de los 100 problemas más populares en algoritmos y estructuras de datos.',
-    link: '#'
-  }
-];
 
 export interface Certification {
   id: string;
@@ -39,11 +23,4 @@ export const certifications: Certification[] = [
     date: '2024',
     link: '#'
   },
-  {
-    id: '2',
-    title: 'Professional Scrum Master I',
-    issuer: 'Scrum.org',
-    date: '2023',
-    link: '#'
-  }
 ];

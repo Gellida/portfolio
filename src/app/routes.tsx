@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import Home from '../pages/Home/Home';
 import Projects from '../pages/Projects/Projects';
+import PortfolioDetails from '../pages/Projects/PortfolioDetails.tsx';
 import Challenges from '../pages/Challenges/Challenges';
 import VisualThinking from '../pages/VisualThinking/VisualThinking';
 import About from '../pages/About/About';
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
   {
     path: '/projects',
     element: <Layout><Projects /></Layout>,
+  },
+  {
+    path: '/projects/portafolio-web',
+    element: <Layout><PortfolioDetails /></Layout>,
   },
   {
     path: '/challenges',

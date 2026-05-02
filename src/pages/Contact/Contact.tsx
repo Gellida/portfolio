@@ -81,10 +81,10 @@ export default function Contact() {
 
   return (
     <div>
-      <div className="bg-teal-600 text-white py-16">
+      <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Contacto</h1>
-          <p className="text-xl text-teal-100">
+          <p className="text-xl text-slate-600 dark:text-slate-400">
             ¿Tienes un proyecto en mente? ¡Hablemos!
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function Contact() {
                 <div className="text-3xl mr-4">📧</div>
                 <div>
                   <h4 className="font-bold text-lg mb-1">Email</h4>
-                  <a href="mailto:gellida.dev@gmail.com" className="text-blue-600 hover:underline">
+                  <a href="mailto:gellida.dev@gmail.com" className="text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 hover:underline">
                     gellida.dev@gmail.com
                   </a>
                 </div>
@@ -114,7 +114,7 @@ export default function Contact() {
                     href="https://linkedin.com/in/jose-gellida" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
+                    className="text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 hover:underline"
                   >
                     linkedin.com/in/jose-gellida
                   </a>
@@ -129,7 +129,7 @@ export default function Contact() {
                     href="https://github.com/gellida" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
+                    className="text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 hover:underline"
                   >
                     github.com/gellida
                   </a>
@@ -140,7 +140,7 @@ export default function Contact() {
                 <div className="text-3xl mr-4">📱</div>
                 <div>
                   <h4 className="font-bold text-lg mb-1">Teléfono</h4>
-                  <p className="text-gray-700">+34 692 073 771 </p>
+                  <p className="text-slate-700 dark:text-slate-200">+34 692 073 771 </p>
                 </div>
               </div>
             </div>
@@ -150,20 +150,20 @@ export default function Contact() {
             <h3 className="text-2xl font-bold mb-6">Envíame un Mensaje</h3>
             
             {status === 'success' && (
-              <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+              <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 dark:bg-green-900/20 dark:border-green-700 dark:text-green-200 rounded-lg">
                 ✅ ¡Mensaje enviado correctamente! Te responderé pronto.
               </div>
             )}
 
             {status === 'error' && (
-              <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 dark:bg-red-900/20 dark:border-red-700 dark:text-red-200 rounded-lg">
                 ❌ {errorMessage}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
                   Nombre *
                 </label>
                 <input
@@ -174,13 +174,13 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   disabled={status === 'loading'}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-600 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent disabled:bg-slate-100 dark:disabled:bg-slate-800/60 disabled:cursor-not-allowed"
                   placeholder="Tu nombre"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
                   Email *
                 </label>
                 <input
@@ -191,13 +191,13 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   disabled={status === 'loading'}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-600 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent disabled:bg-slate-100 dark:disabled:bg-slate-800/60 disabled:cursor-not-allowed"
                   placeholder="tu@email.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="number" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="number" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
                   Móvil *
                 </label>
                 <input
@@ -208,13 +208,13 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   disabled={status === 'loading'}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-600 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent disabled:bg-slate-100 dark:disabled:bg-slate-800/60 disabled:cursor-not-allowed"
                   placeholder="tu móvil"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
                   Mensaje *
                 </label>
                 <textarea
@@ -225,7 +225,7 @@ export default function Contact() {
                   required
                   disabled={status === 'loading'}
                   rows={5}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-600 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent disabled:bg-slate-100 dark:disabled:bg-slate-800/60 disabled:cursor-not-allowed"
                   placeholder="Cuéntame sobre tu proyecto..."
                 ></textarea>
               </div>
@@ -233,7 +233,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
+                className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition disabled:bg-slate-400 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {status === 'loading' ? (
                   <>

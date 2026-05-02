@@ -9,11 +9,14 @@ interface SectionProps {
 
 export default function Section({ title, subtitle, children, className = '' }: SectionProps) {
   return (
-    <section className={`py-16 ${className}`}>
+    <section className={`py-20 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">{title}</h2>
-          {subtitle && <p className="text-xl text-gray-600">{subtitle}</p>}
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-4 flex items-center">
+            <span className="text-indigo-500 dark:text-indigo-400 mr-3">_</span>
+            {title}
+          </h2>
+          {subtitle && <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400">{subtitle}</p>}
         </div>
         {children}
       </div>
