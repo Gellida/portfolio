@@ -12,39 +12,38 @@ export interface TechnologiesData {
 
 export const technologies: TechnologiesData = {
   frontend: [
-    { name: 'HTML', icon: '🌐' },
-    { name: 'CSS', icon: '🎨' },
+    { name: 'React', icon: '⚛️' },
+    { name: 'Next.js', icon: '▲' },
+    { name: 'TypeScript', icon: '💙' },
     { name: 'JavaScript', icon: '⚡' },
-    { name: 'ReactJS', icon: '⚛️' },
     { name: 'TailwindCSS', icon: '💨' },
-    { name: 'SASS', icon: '💅' },
+    { name: 'HTML/CSS', icon: '🌐' },
     { name: 'Figma', icon: '🎨' }
   ],
   backend: [
     { name: 'Python', icon: '🐍' },
-    { name: 'NodeJS', icon: '💚' },
-    { name: 'Laravel', icon: '🔺' },
-    { name: 'ExpressJS', icon: '🚂' },
-    { name: 'PostgreSQL', icon: '🐘' },
+    { name: 'Java (Spring Boot)', icon: '☕' },
+    { name: 'Kotlin', icon: '🎯' },
+    { name: 'Node.js', icon: '💚' },
     { name: 'FastAPI', icon: '⚡' },
-    { name: 'Next.js', icon: '▲' },
-    { name: 'Nginx', icon: '🔧' }
+    { name: 'PostgreSQL', icon: '🐘' },
+    { name: 'MongoDB', icon: '🍃' },
+    { name: 'DynamoDB', icon: '🗄️' }
   ],
   tools: [
-    { name: 'Git', icon: '📦' },
-    { name: 'GitHub', icon: '🐙' },
-    { name: 'Terminal', icon: '💻' },
-    { name: 'VSCode', icon: '📝' },
-    { name: 'npm', icon: '📦' },
-    { name: 'OpenAI', icon: '🤖' },
-    { name: 'AWS', icon: '☁️' },
-    { name: 'Azure', icon: '☁️' }
+    { name: 'AWS (EC2/S3/Lambda)', icon: '☁️' },
+    { name: 'Docker', icon: '🐳' },
+    { name: 'Firebase', icon: '🔥' },
+    { name: 'OpenAI / LangChain', icon: '🤖' },
+    { name: 'n8n', icon: '🔄' },
+    { name: 'Git / GitHub', icon: '🐙' },
+    { name: 'CI/CD', icon: '🚀' },
+    { name: 'Kubernetes', icon: '⚙️' }
   ],
   learning: [
-    { name: 'Power Automate', icon: '🔄' },
-    { name: 'Astro', icon: '🚀' },
-    { name: 'Docker', icon: '🐳' },
-    { name: 'TypeScript', icon: '💙' },
-    { name: 'Django', icon: '🎸' }
+    { name: 'Ciencia de Datos', icon: '📊' },
+    { name: 'Agentes de IA', icon: '🧠' },
+    { name: 'Flutter', icon: '💙' },
+    { name: 'Astro', icon: '🌠' }
   ]
 };

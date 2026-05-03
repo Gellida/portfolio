@@ -92,25 +92,24 @@ export default function Home() {
                   <span className="text-indigo-500 dark:text-indigo-400">as</span> pd
                 </p>
                 <p>
-                  <span className="text-indigo-500 dark:text-indigo-400">import</span> express{' '}
-                  <span className="text-indigo-500 dark:text-indigo-400">from</span> 'express'
+                  <span className="text-indigo-500 dark:text-indigo-400">from</span> langchain{' '}
+                  <span className="text-indigo-500 dark:text-indigo-400">import</span> Agent
                 </p>
-                <p className="text-slate-500 dark:text-slate-500">// Initialize fullstack capabilities</p>
+                <p className="text-slate-500 dark:text-slate-500">// AI-Driven Engineer profile</p>
                 <p>
-                  <span className="text-emerald-600 dark:text-emerald-400">const</span> developer ={' '}
-                  <span className="text-indigo-500 dark:text-indigo-400">new</span> FullStack({`{`}
+                  <span className="text-emerald-600 dark:text-emerald-400">const</span> profile ={' '}{`{`}
                 </p>
                 <p className="pl-4">
-                  frontend: <span className="text-amber-600 dark:text-amber-300">'React'</span>,
+                  stack: <span className="text-amber-600 dark:text-amber-300">'Java · Kotlin · JS'</span>,
                 </p>
                 <p className="pl-4">
-                  backend: <span className="text-amber-600 dark:text-amber-300">'Node.js'</span>,
+                  ai: <span className="text-amber-600 dark:text-amber-300">'OpenAI · LangChain'</span>,
                 </p>
                 <p className="pl-4">
-                  data: <span className="text-amber-600 dark:text-amber-300">'SQL'</span>
+                  cloud: <span className="text-amber-600 dark:text-amber-300">'AWS · Firebase'</span>
                 </p>
-                <p>{`}`});</p>
-                <p className="pt-2 text-emerald-600 dark:text-emerald-400">{`> System optimized and running...`}</p>
+                <p>{`};`}</p>
+                <p className="pt-2 text-emerald-600 dark:text-emerald-400">{`> Automating at scale...`}</p>
               </div>
             </div>
           </div>
@@ -145,11 +144,11 @@ export default function Home() {
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-                  <h3 className="font-bold text-xl">3+</h3>
+                  <h3 className="font-bold text-xl">2+</h3>
                   <p className="text-sm text-slate-500 dark:text-slate-400">{t('home.about.experience')}</p>
                 </div>
                 <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-                  <h3 className="font-bold text-xl">20+</h3>
+                  <h3 className="font-bold text-xl">5+</h3>
                   <p className="text-sm text-slate-500 dark:text-slate-400">{t('home.about.completedProjects')}</p>
                 </div>
               </div>
