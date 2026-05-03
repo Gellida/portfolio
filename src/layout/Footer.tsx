@@ -1,7 +1,10 @@
 import { trackEvent } from '../hooks/useAnalytics';
 import { GitFork, Link2, Mail } from 'lucide-react';
+import { useLanguage } from '../hooks/useLanguage';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="mt-auto border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
@@ -9,7 +12,7 @@ export default function Footer() {
           <span className="font-bold text-xl tracking-tight">
             Jose<span className="text-indigo-500 dark:text-indigo-400">Gellida</span>
           </span>
-          <p className="text-slate-500 dark:text-slate-400 text-sm">Programador Fullstack</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">{t('footer.role')}</p>
         </div>
 
         <div className="flex space-x-6 mb-4 md:mb-0">
@@ -44,7 +47,7 @@ export default function Footer() {
         </div>
 
         <div className="text-slate-500 dark:text-slate-500 text-sm">
-          © {new Date().getFullYear()} José Gellida. Todos los derechos reservados.
+          © {new Date().getFullYear()} José Gellida. {t('footer.rights')}
         </div>
       </div>
     </footer>

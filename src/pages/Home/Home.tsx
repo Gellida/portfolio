@@ -5,8 +5,11 @@ import ProjectCard from '../../components/ProjectCard';
 import TechCard from '../../components/TechCard'; 
 import { projects } from '../../data/projects';
 import { technologies } from '../../data/technologies';
+import { useLanguage } from '../../hooks/useLanguage';
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div>
       {/* Hero */}
@@ -15,19 +18,18 @@ export default function Home() {
           <div className="md:w-3/5 space-y-6 z-10">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 text-sm font-medium">
               <span className="flex w-2 h-2 rounded-full bg-indigo-500 mr-2 animate-pulse"></span>
-              Disponible para nuevos proyectos
+              {t('home.hero.available')}
             </div>
 
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-              Transformando{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Datos</span>{' '}
-              en decisiones y código en{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Soluciones</span>.
+              {t('home.hero.title.start')}{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">{t('home.hero.title.data')}</span>{' '}
+              {t('home.hero.title.middle')}{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">{t('home.hero.title.solutions')}</span>.
             </h1>
 
             <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl">
-              Soy un Desarrollador Fullstack apasionado por construir aplicaciones escalables,
-              con foco en buenas prácticas, rendimiento y una UI moderna.
+              {t('home.hero.description')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-2">
@@ -35,13 +37,13 @@ export default function Home() {
                 to="/projects"
                 className="px-8 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors flex items-center justify-center"
               >
-                Ver Proyectos <ChevronRight size={18} className="ml-2" />
+                {t('home.hero.viewProjects')} <ChevronRight size={18} className="ml-2" />
               </Link>
               <Link
                 to="/contact"
                 className="px-8 py-3 rounded-lg bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 font-medium transition-colors flex items-center justify-center"
               >
-                Contactar
+                {t('home.hero.contact')}
               </Link>
             </div>
 
@@ -125,7 +127,7 @@ export default function Home() {
                   <span className="text-slate-500 dark:text-slate-500 flex flex-col items-center"> 
                     <img
                         src={import.meta.env.BASE_URL + 'yo.JPEG'}
-                        alt="Foto de Jose Gellida"
+                        alt={t('home.about.photoAlt')}
                         className="w-full h-full object-cover object-center"
                         loading="lazy"
                       />
@@ -136,27 +138,26 @@ export default function Home() {
 
             <div className="md:w-1/2 space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold flex items-center">
-                <span className="text-indigo-500 dark:text-indigo-400 mr-3">_</span> Sobre Mí
+                <span className="text-indigo-500 dark:text-indigo-400 mr-3">_</span> {t('home.about.title')}
               </h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-                Soy un desarrollador fullstack enfocado en construir productos web modernos.
-                Me gusta trabajar de punta a punta: desde UI con React/TypeScript hasta APIs y bases de datos.
+                {t('home.about.description')}
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
                   <h3 className="font-bold text-xl">3+</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Años de experiencia</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('home.about.experience')}</p>
                 </div>
                 <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
                   <h3 className="font-bold text-xl">20+</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Proyectos completados</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('home.about.completedProjects')}</p>
                 </div>
               </div>
               <Link
                 to="/about"
                 className="inline-flex items-center text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium"
               >
-                Ver más <ChevronRight size={18} className="ml-1" />
+                {t('home.about.more')} <ChevronRight size={18} className="ml-1" />
               </Link>
             </div>
           </div>
@@ -164,28 +165,31 @@ export default function Home() {
       </section>
 
       {/* Tecnologías */}
-      <Section title="Tecnologías" subtitle="Mi stack tecnológico">
+      <Section title={t('home.tech.title')} subtitle={t('home.tech.subtitle')}>
         <p className="text-lg mb-8 text-slate-600 dark:text-slate-400">
-          Trabajo en el <span className="text-indigo-600 dark:text-indigo-400 font-semibold">mundo del desarrollo web</span> con
-          diversas tecnologías. Mi <span className="text-emerald-600 dark:text-emerald-400 font-semibold">experiencia</span> incluye:
+          {t('home.tech.description.start')}
+          <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{t('home.tech.description.highlight1')}</span>
+          {t('home.tech.description.middle')}
+          <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{t('home.tech.description.highlight2')}</span>
+          {t('home.tech.description.end')}
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <TechCard category="Frontend" technologies={technologies.frontend} color="cyan" />
-          <TechCard category="Backend" technologies={technologies.backend} color="gray" />
-          <TechCard category="Herramientas" technologies={technologies.tools} color="blue" />
-          <TechCard category="Aprendiendo" technologies={technologies.learning} color="orange" />
+          <TechCard category={t('home.tech.category.frontend')} technologies={technologies.frontend} color="cyan" />
+          <TechCard category={t('home.tech.category.backend')} technologies={technologies.backend} color="gray" />
+          <TechCard category={t('home.tech.category.tools')} technologies={technologies.tools} color="blue" />
+          <TechCard category={t('home.tech.category.learning')} technologies={technologies.learning} color="orange" />
         </div>
       </Section>
 
       {/* Previsualización: Proyectos */}
-      <Section title="Proyectos" subtitle="Una selección rápida">
+      <Section title={t('home.projects.title')} subtitle={t('home.projects.subtitle')}>
         <div className="flex items-center justify-between mb-6">
-          <p className="text-slate-600 dark:text-slate-400">Explora algunos proyectos destacados y luego entra a verlos todos.</p>
+          <p className="text-slate-600 dark:text-slate-400">{t('home.projects.description')}</p>
           <Link
             to="/projects"
             className="hidden sm:inline-flex items-center text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium"
           >
-            Ver todos <ChevronRight size={18} className="ml-1" />
+            {t('home.projects.viewAll')} <ChevronRight size={18} className="ml-1" />
           </Link>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -198,13 +202,13 @@ export default function Home() {
             to="/projects"
             className="inline-flex items-center text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium"
           >
-            Ver todos <ChevronRight size={18} className="ml-1" />
+            {t('home.projects.viewAll')} <ChevronRight size={18} className="ml-1" />
           </Link>
         </div>
       </Section>
 
       {/* Previsualización: Challenges */}
-      <Section title="Challenges" subtitle="Certificaciones y desafíos">
+      <Section title={t('nav.challenges')} subtitle={t('home.challenges.subtitle')}>
         <div className="grid md:grid-cols-2 gap-6">
            
         </div>
@@ -213,7 +217,7 @@ export default function Home() {
             to="/challenges"
             className="inline-flex items-center text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium"
           >
-            Ver todo <ChevronRight size={18} className="ml-1" />
+            {t('home.challenges.viewAll')} <ChevronRight size={18} className="ml-1" />
           </Link>
         </div>
       </Section>
@@ -223,15 +227,15 @@ export default function Home() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 mb-6">
           <Mail size={32} />
         </div>
-        <h2 className="text-3xl md:text-5xl font-bold mb-6">¿Trabajamos juntos?</h2>
+        <h2 className="text-3xl md:text-5xl font-bold mb-6">{t('home.cta.title')}</h2>
         <p className="text-slate-600 dark:text-slate-400 text-lg mb-10">
-          Estoy abierto a nuevas oportunidades. Si tienes un proyecto en mente, conversemos.
+          {t('home.cta.description')}
         </p>
         <Link
           to="/contact"
           className="inline-flex items-center px-8 py-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-lg transition-transform hover:-translate-y-1 shadow-lg shadow-indigo-500/20"
         >
-          Escríbeme
+          {t('home.cta.button')}
         </Link>
       </section>
     </div>

@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import Section from '../../components/Section';
 import { trackEvent } from '../../hooks/useAnalytics';
+import { useLanguage } from '../../hooks/useLanguage';
 
 interface FormData {
   name: string;
@@ -10,6 +11,7 @@ interface FormData {
 }
 
 export default function Contact() {
+  const { language, t } = useLanguage();
   const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -35,14 +37,14 @@ export default function Contact() {
 
     if (!web3FormsAccessKey) {
       setStatus('error');
-      setErrorMessage('El formulario no esta configurado. Define VITE_WEB3FORMS_ACCESS_KEY antes de desplegar.');
+      setErrorMessage(t('contact.form.error.config'));
       return;
     }
 
     // Validación básica
     if (!formData.name || !formData.email || !formData.number || !formData.message) {
       setStatus('error');
-      setErrorMessage('Por favor completa todos los campos');
+      setErrorMessage(t('contact.form.error.required'));
       return;
     }
 
@@ -59,7 +61,10 @@ export default function Contact() {
           email: formData.email,
           phone: formData.number,
           message: formData.message,
-          subject: `Nuevo mensaje de ${formData.name} desde Portfolio`,
+          subject:
+            language === 'es'
+              ? t('contact.form.subject').replace('{{name}}', formData.name)
+              : t('contact.form.subject').replace('{{name}}', formData.name),
         })
       });
 
@@ -71,11 +76,11 @@ export default function Contact() {
         setFormData({ name: '', email: '', number: '', message: '' });
         setTimeout(() => setStatus('idle'), 5000);
       } else {
-        throw new Error(data.message || 'Error al enviar el mensaje');
+        throw new Error(data.message || t('contact.form.error.api'));
       }
     } catch (error) {
       setStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Error al enviar el mensaje. Por favor, intenta de nuevo.');
+      setErrorMessage(error instanceof Error ? error.message : t('contact.form.error.submit'));
     }
   };
 
@@ -83,17 +88,17 @@ export default function Contact() {
     <div>
       <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contacto</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t('contact.header.title')}</h1>
           <p className="text-xl text-slate-600 dark:text-slate-400">
-            ¿Tienes un proyecto en mente? ¡Hablemos!
+            {t('contact.header.subtitle')}
           </p>
         </div>
       </div>
 
-      <Section title="Ponte en Contacto">
+      <Section title={t('contact.section.title')}>
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-bold mb-6">Información de Contacto</h3>
+            <h3 className="text-2xl font-bold mb-6">{t('contact.info.title')}</h3>
             
             <div className="space-y-6">
               <div className="flex items-start">
@@ -139,7 +144,7 @@ export default function Contact() {
               <div className="flex items-start">
                 <div className="text-3xl mr-4">📱</div>
                 <div>
-                  <h4 className="font-bold text-lg mb-1">Teléfono</h4>
+                  <h4 className="font-bold text-lg mb-1">{t('contact.info.phone')}</h4>
                   <p className="text-slate-700 dark:text-slate-200">+34 692 073 771 </p>
                 </div>
               </div>
@@ -147,11 +152,11 @@ export default function Contact() {
           </div>
 
           <div>
-            <h3 className="text-2xl font-bold mb-6">Envíame un Mensaje</h3>
+            <h3 className="text-2xl font-bold mb-6">{t('contact.form.title')}</h3>
             
             {status === 'success' && (
               <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 dark:bg-green-900/20 dark:border-green-700 dark:text-green-200 rounded-lg">
-                ✅ ¡Mensaje enviado correctamente! Te responderé pronto.
+                ✅ {t('contact.form.success')}
               </div>
             )}
 
@@ -164,7 +169,7 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
-                  Nombre *
+                  {t('contact.form.name')}
                 </label>
                 <input
                   type="text"
@@ -175,13 +180,13 @@ export default function Contact() {
                   required
                   disabled={status === 'loading'}
                   className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent disabled:bg-slate-100 dark:disabled:bg-slate-800/60 disabled:cursor-not-allowed"
-                  placeholder="Tu nombre"
+                  placeholder={t('contact.form.placeholder.name')}
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
-                  Email *
+                  {t('contact.form.email')}
                 </label>
                 <input
                   type="email"
@@ -192,13 +197,13 @@ export default function Contact() {
                   required
                   disabled={status === 'loading'}
                   className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent disabled:bg-slate-100 dark:disabled:bg-slate-800/60 disabled:cursor-not-allowed"
-                  placeholder="tu@email.com"
+                  placeholder={t('contact.form.placeholder.email')}
                 />
               </div>
 
               <div>
                 <label htmlFor="number" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
-                  Móvil *
+                  {t('contact.form.mobile')}
                 </label>
                 <input
                   type="tel"
@@ -209,13 +214,13 @@ export default function Contact() {
                   required
                   disabled={status === 'loading'}
                   className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent disabled:bg-slate-100 dark:disabled:bg-slate-800/60 disabled:cursor-not-allowed"
-                  placeholder="tu móvil"
+                  placeholder={t('contact.form.placeholder.mobile')}
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
-                  Mensaje *
+                  {t('contact.form.message')}
                 </label>
                 <textarea
                   id="message"
@@ -226,7 +231,7 @@ export default function Contact() {
                   disabled={status === 'loading'}
                   rows={5}
                   className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent disabled:bg-slate-100 dark:disabled:bg-slate-800/60 disabled:cursor-not-allowed"
-                  placeholder="Cuéntame sobre tu proyecto..."
+                  placeholder={t('contact.form.placeholder.message')}
                 ></textarea>
               </div>
 
@@ -241,10 +246,10 @@ export default function Contact() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Enviando...
+                    {t('contact.form.button.sending')}
                   </>
                 ) : (
-                  'Enviar Mensaje'
+                  t('contact.form.button.send')
                 )}
               </button>
             </form>

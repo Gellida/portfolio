@@ -2,22 +2,24 @@ import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import { useLanguage } from '../hooks/useLanguage';
 
 export default function Navbar() {
   const { isDark, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const links = useMemo(
     () => [
-      { to: '/', label: 'Inicio' },
-      { to: '/projects', label: 'Proyectos' },
-      { to: '/challenges', label: 'Challenges' },
-      { to: '/visual-thinking', label: 'Visual Thinking' },
-      { to: '/about', label: 'About' },
-      { to: '/contact', label: 'Contacto' },
+      { to: '/', label: t('nav.home') },
+      { to: '/projects', label: t('nav.projects') },
+      { to: '/challenges', label: t('nav.challenges') },
+      { to: '/visual-thinking', label: t('nav.visualThinking') },
+      { to: '/about', label: t('nav.about') },
+      { to: '/contact', label: t('nav.contact') },
     ],
-    [],
+    [t],
   );
 
   const isActive = (to: string) => location.pathname === to;
@@ -55,29 +57,99 @@ export default function Navbar() {
 
             <button
               type="button"
-              onClick={toggleTheme}
-              aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
-              className="inline-flex items-center rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              onClick={() => setLanguage('es')}
+              aria-label={t('lang.spanish')}
+              className={
+                `inline-flex items-center rounded-lg border px-2 py-1 text-lg leading-none transition ` +
+                (language === 'es'
+                  ? 'border-indigo-500 bg-indigo-500/10'
+                  : 'border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800')
+              }
             >
-              {isDark ? 'Claro' : 'Oscuro'}
+              <span aria-hidden="true">🇪🇸</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setLanguage('en')}
+              aria-label={t('lang.english')}
+              className={
+                `inline-flex items-center rounded-lg border px-2 py-1 text-lg leading-none transition ` +
+                (language === 'en'
+                  ? 'border-indigo-500 bg-indigo-500/10'
+                  : 'border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800')
+              }
+            >
+              <span aria-hidden="true">🇺🇸</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={isDark ? t('theme.switchToLight') : t('theme.switchToDark')}
+              role="switch"
+              aria-checked={isDark}
+              className="relative inline-flex h-7 w-12 items-center rounded-full border border-slate-300 bg-slate-200 transition-colors dark:border-slate-600 dark:bg-slate-700"
+            >
+              <span
+                className={
+                  `inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ` +
+                  (isDark ? 'translate-x-6' : 'translate-x-1')
+                }
+              />
             </button>
           </div>
 
           <div className="md:hidden flex items-center gap-3">
             <button
               type="button"
-              onClick={toggleTheme}
-              aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
-              className="inline-flex items-center rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              onClick={() => setLanguage('es')}
+              aria-label={t('lang.spanish')}
+              className={
+                `inline-flex items-center rounded-lg border px-2 py-1 text-lg leading-none transition ` +
+                (language === 'es'
+                  ? 'border-indigo-500 bg-indigo-500/10'
+                  : 'border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800')
+              }
             >
-              {isDark ? 'Claro' : 'Oscuro'}
+              <span aria-hidden="true">🇪🇸</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setLanguage('en')}
+              aria-label={t('lang.english')}
+              className={
+                `inline-flex items-center rounded-lg border px-2 py-1 text-lg leading-none transition ` +
+                (language === 'en'
+                  ? 'border-indigo-500 bg-indigo-500/10'
+                  : 'border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800')
+              }
+            >
+              <span aria-hidden="true">🇺🇸</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={isDark ? t('theme.switchToLight') : t('theme.switchToDark')}
+              role="switch"
+              aria-checked={isDark}
+              className="relative inline-flex h-7 w-12 items-center rounded-full border border-slate-300 bg-slate-200 transition-colors dark:border-slate-600 dark:bg-slate-700"
+            >
+              <span
+                className={
+                  `inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ` +
+                  (isDark ? 'translate-x-6' : 'translate-x-1')
+                }
+              />
             </button>
 
             <button
               type="button"
               onClick={() => setIsMenuOpen((prev) => !prev)}
               className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white focus:outline-none"
-              aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-label={isMenuOpen ? t('menu.close') : t('menu.open')}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
