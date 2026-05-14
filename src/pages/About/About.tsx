@@ -1,11 +1,34 @@
 import Section from '../../components/Section';
+import Seo from '../../components/Seo';
 import { useLanguage } from '../../hooks/useLanguage';
 
 export default function About() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+
+  const seo =
+    language === 'es'
+      ? {
+          title: 'Sobre mí',
+          description:
+            'Conoce la trayectoria de José Gellida: ingeniería de software, desarrollo fullstack, agentes de IA, ciencia de datos y experiencia profesional.',
+        }
+      : {
+          title: 'About me',
+          description:
+            'Learn about José Gellida background: software engineering, fullstack development, AI agents, data science, and professional experience.',
+        };
 
   return (
     <div>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        path="/about"
+        language={language}
+        image="/yo.JPEG"
+        imageAlt={language === 'es' ? 'José Gellida' : 'José Gellida portrait'}
+      />
+
       <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">{t('about.header.title')}</h1>

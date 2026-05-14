@@ -9,7 +9,7 @@ export default function Footer() {
     <footer className="mt-auto border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
         <div className="mb-4 md:mb-0">
-          <span className="font-bold text-xl tracking-tight">
+          <span className="font-display font-bold text-xl tracking-tight">
             Jose<span className="text-indigo-500 dark:text-indigo-400">Gellida</span>
           </span>
           <p className="text-slate-500 dark:text-slate-400 text-sm">{t('footer.role')}</p>

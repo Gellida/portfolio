@@ -3,17 +3,54 @@ import { ChevronRight, GitFork, Link2, Mail } from 'lucide-react';
 import Section from '../../components/Section';
 import ProjectCard from '../../components/ProjectCard';
 import TechCard from '../../components/TechCard'; 
+import Seo from '../../components/Seo';
 import { projects } from '../../data/projects';
 import { technologies } from '../../data/technologies';
 import { useLanguage } from '../../hooks/useLanguage';
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+
+  const seo =
+    language === 'es'
+      ? {
+          title: 'Ingeniero de Software Fullstack e IA',
+          description:
+            'Portafolio de José Gellida: ingeniero de software enfocado en desarrollo fullstack, automatización, datos e inteligencia artificial aplicada.',
+        }
+      : {
+          title: 'AI-focused Fullstack Software Engineer',
+          description:
+            'José Gellida portfolio: software engineer focused on fullstack development, automation, data, and applied artificial intelligence.',
+        };
 
   return (
     <div>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        path="/"
+        language={language}
+        image="/portadaweb.png"
+        imageAlt={language === 'es' ? 'Vista previa del portafolio de José Gellida' : 'José Gellida portfolio preview'}
+      />
+
       {/* Hero */}
       <section className="relative overflow-hidden bg-slate-50 dark:bg-slate-900">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-80"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 18% 18%, rgba(20, 184, 166, 0.16) 0, rgba(20, 184, 166, 0.16) 12%, transparent 34%), radial-gradient(circle at 82% 20%, rgba(99, 102, 241, 0.16) 0, rgba(99, 102, 241, 0.16) 10%, transparent 32%), linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px)',
+            backgroundSize: 'auto, auto, 32px 32px, 32px 32px',
+            backgroundPosition: 'center, center, center, center',
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/70 via-white/30 to-transparent dark:from-slate-900/80 dark:via-slate-900/40"
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 md:pt-32 md:pb-28 flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="md:w-3/5 space-y-6 z-10">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 text-sm font-medium">
@@ -21,18 +58,18 @@ export default function Home() {
               {t('home.hero.available')}
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
+            <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-tight animate-fade-in-up" style={{ animationDelay: '100ms' }}>
               {t('home.hero.title.start')}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">{t('home.hero.title.data')}</span>{' '}
               {t('home.hero.title.middle')}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">{t('home.hero.title.solutions')}</span>.
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl">
+            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl animate-fade-in-up" style={{ animationDelay: '220ms' }}>
               {t('home.hero.description')}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row gap-4 pt-2 animate-fade-in-up" style={{ animationDelay: '340ms' }}>
               <Link
                 to="/projects"
                 className="px-8 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors flex items-center justify-center"
@@ -47,7 +84,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="flex space-x-5 pt-2">
+            <div className="flex space-x-5 pt-2 animate-fade-in-up" style={{ animationDelay: '460ms' }}>
               <a
                 href="https://github.com/gellida"
                 target="_blank"
@@ -76,10 +113,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hero decoration */}
-          <div className="hidden md:flex md:w-2/5 justify-end relative">
-            <div className="absolute w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl -top-10 -right-10"></div>
-            <div className="absolute w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl bottom-10 right-20"></div>
+          <div className="hidden md:flex md:w-2/5 justify-end relative animate-fade-in-up" style={{ animationDelay: '180ms' }}>
             <div className="relative border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-800/40 backdrop-blur-sm p-6 rounded-2xl w-full max-w-sm transform rotate-3 hover:rotate-0 transition-transform duration-500 shadow-xl">
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -142,15 +176,38 @@ export default function Home() {
               <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
                 {t('home.about.description')}
               </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-                  <h3 className="font-bold text-xl">2+</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('home.about.experience')}</p>
-                </div>
-                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-                  <h3 className="font-bold text-xl">5+</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('home.about.completedProjects')}</p>
-                </div>
+              <div
+                className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/70 bg-gradient-to-br from-white via-slate-50 to-indigo-50/70 dark:from-slate-900/70 dark:via-slate-900/50 dark:to-indigo-900/20 p-4 sm:p-5 overflow-hidden animate-fade-in-up"
+                style={{ animationDelay: '100ms' }}
+              >
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -top-12 right-0 w-40 h-40 rounded-full bg-indigo-400/20 blur-2xl"
+                />
+                <article
+                  className="relative rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/40 p-4 animate-fade-in-up transition-transform duration-300 hover:-translate-y-0.5"
+                  style={{ animationDelay: '220ms' }}
+                >
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-2">
+                    Impact
+                  </p>
+                  <p className="text-5xl leading-none font-black text-slate-900 dark:text-white">
+                    2<span className="text-indigo-500">+</span>
+                  </p>
+                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{t('home.about.experience')}</p>
+                </article>
+                <article
+                  className="relative rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/40 p-4 animate-fade-in-up transition-transform duration-300 hover:-translate-y-0.5"
+                  style={{ animationDelay: '320ms' }}
+                >
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-2">
+                    Build
+                  </p>
+                  <p className="text-5xl leading-none font-black text-slate-900 dark:text-white">
+                    5<span className="text-emerald-500">+</span>
+                  </p>
+                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{t('home.about.completedProjects')}</p>
+                </article>
               </div>
               <Link
                 to="/about"

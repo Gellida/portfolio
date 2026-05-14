@@ -1,13 +1,36 @@
 import Section from '../../components/Section';
 import ProjectCard from '../../components/ProjectCard';
+import Seo from '../../components/Seo';
 import { projects } from '../../data/projects';
 import { useLanguage } from '../../hooks/useLanguage';
 
 export default function Projects() {
   const { language } = useLanguage();
 
+  const seo =
+    language === 'es'
+      ? {
+          title: 'Proyectos de desarrollo',
+          description:
+            'Explora los proyectos de José Gellida: desarrollo web, automatización, visualización de datos y soluciones construidas con React, TypeScript y AWS.',
+        }
+      : {
+          title: 'Development Projects',
+          description:
+            'Explore José Gellida projects: web development, automation, data visualization, and solutions built with React, TypeScript, and AWS.',
+        };
+
   return (
     <div>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        path="/projects"
+        language={language}
+        image="/portadaweb.png"
+        imageAlt={language === 'es' ? 'Colección de proyectos de José Gellida' : 'José Gellida projects collection'}
+      />
+
       <div className="relative overflow-hidden bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-16">
         <div className="pointer-events-none absolute -top-24 -left-20 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl"></div>
         <div className="pointer-events-none absolute -bottom-24 -right-20 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl"></div>

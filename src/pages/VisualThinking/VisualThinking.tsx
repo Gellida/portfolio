@@ -1,11 +1,34 @@
 import Section from '../../components/Section';
+import Seo from '../../components/Seo';
 import { useLanguage } from '../../hooks/useLanguage';
 
 export default function VisualThinking() {
   const { language } = useLanguage();
 
+  const seo =
+    language === 'es'
+      ? {
+          title: 'Visual thinking y gráficas',
+          description:
+            'Visualizaciones, gráficas interactivas y análisis de datos de José Gellida para explorar rendimiento, tecnología y evolución de proyectos.',
+        }
+      : {
+          title: 'Visual thinking and charts',
+          description:
+            'Interactive charts, data visualizations, and analysis by José Gellida to explore performance, technology, and project evolution.',
+        };
+
   return (
     <div>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        path="/visual-thinking"
+        language={language}
+        image="/web_lighthouse.png"
+        imageAlt={language === 'es' ? 'Visualización de análisis y métricas' : 'Analysis and metrics visualization'}
+      />
+
       <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">{language === 'es' ? 'Gráficas y Visuales' : 'Charts and Visual Thinking'}</h1>

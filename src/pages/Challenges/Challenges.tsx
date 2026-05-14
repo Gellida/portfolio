@@ -1,12 +1,35 @@
 import Section from '../../components/Section';
+import Seo from '../../components/Seo';
 import { certifications } from '../../data/challenges';
 import { useLanguage } from '../../hooks/useLanguage';
 
 export default function Challenges() {
   const { language } = useLanguage();
 
+  const seo =
+    language === 'es'
+      ? {
+          title: 'Desafíos y certificaciones',
+          description:
+            'Desafíos técnicos, certificaciones y aprendizajes de José Gellida en desarrollo, cloud, automatización y herramientas profesionales.',
+        }
+      : {
+          title: 'Challenges and certifications',
+          description:
+            'Technical challenges, certifications, and learnings from José Gellida in development, cloud, automation, and professional tools.',
+        };
+
   return (
     <div>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        path="/challenges"
+        language={language}
+        image="/portadaweb.png"
+        imageAlt={language === 'es' ? 'Certificaciones y desafíos de José Gellida' : 'José Gellida certifications and challenges'}
+      />
+
       <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">{language === 'es' ? 'Desafíos y Certificaciones' : 'Challenges and Certifications'}</h1>

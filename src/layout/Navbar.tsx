@@ -24,6 +24,12 @@ export default function Navbar() {
 
   const isActive = (to: string) => location.pathname === to;
 
+  const linkClassName = (to: string) =>
+    `relative pb-1 text-sm font-medium transition-colors hover:text-indigo-500 dark:hover:text-indigo-400 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-indigo-500 after:transition-transform after:duration-200 ` +
+    (isActive(to)
+      ? 'text-indigo-500 dark:text-indigo-400 after:scale-x-100'
+      : 'text-slate-600 dark:text-slate-300');
+
   return (
     <nav className="fixed w-full z-50 top-0 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +38,7 @@ export default function Navbar() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-emerald-400 flex items-center justify-center font-bold text-lg text-white">
               J
             </div>
-            <span className="font-bold text-xl tracking-tight">
+            <span className="font-display font-bold text-xl tracking-tight">
               Jose<span className="text-indigo-500 dark:text-indigo-400">Gellida</span>
             </span>
           </Link>
@@ -43,12 +49,7 @@ export default function Navbar() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={
-                    `text-sm font-medium transition-colors hover:text-indigo-500 dark:hover:text-indigo-400 ` +
-                    (isActive(link.to)
-                      ? 'text-indigo-500 dark:text-indigo-400'
-                      : 'text-slate-600 dark:text-slate-300')
-                  }
+                  className={linkClassName(link.to)}
                 >
                   {link.label}
                 </Link>

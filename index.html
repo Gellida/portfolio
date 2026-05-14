@@ -1,10 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo_j.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>José Gellida | Programador Multiplataforma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
     <script>
       (function () {
         try {
@@ -14,6 +17,16 @@
           if (shouldUseDark) document.documentElement.classList.add('dark');
         } catch {
           // ignore
+        }
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          const storedLanguage = localStorage.getItem('language');
+          document.documentElement.lang = storedLanguage === 'en' ? 'en' : 'es';
+        } catch {
+          document.documentElement.lang = 'es';
         }
       })();
     </script>

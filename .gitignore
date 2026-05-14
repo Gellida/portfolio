@@ -31,6 +31,12 @@ lighthouse-report.html
 .env.local
 .env.*.local
 
+
+
 # Build outputs
 build/
 *.tsbuildinfo
+
+# Local Copilot/autoskills workspace files
+.agents/
+skills-lock.json

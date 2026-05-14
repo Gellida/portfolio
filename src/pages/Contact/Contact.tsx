@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import Section from '../../components/Section';
+import Seo from '../../components/Seo';
 import { trackEvent } from '../../hooks/useAnalytics';
 import { useLanguage } from '../../hooks/useLanguage';
 
@@ -12,6 +13,18 @@ interface FormData {
 
 export default function Contact() {
   const { language, t } = useLanguage();
+  const seo =
+    language === 'es'
+      ? {
+          title: 'Contacto',
+          description:
+            'Contacta con José Gellida para proyectos de desarrollo, automatización, datos o colaboración profesional.',
+        }
+      : {
+          title: 'Contact',
+          description:
+            'Contact José Gellida for development projects, automation, data work, or professional collaboration.',
+        };
   const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -86,6 +99,15 @@ export default function Contact() {
 
   return (
     <div>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        path="/contact"
+        language={language}
+        image="/portadaweb.png"
+        imageAlt={language === 'es' ? 'Página de contacto de José Gellida' : 'José Gellida contact page'}
+      />
+
       <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">{t('contact.header.title')}</h1>

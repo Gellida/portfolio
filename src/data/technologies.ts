@@ -12,38 +12,38 @@ export interface TechnologiesData {
 
 export const technologies: TechnologiesData = {
   frontend: [
-    { name: 'React', icon: '⚛️' },
-    { name: 'Next.js', icon: '▲' },
-    { name: 'TypeScript', icon: '💙' },
-    { name: 'JavaScript', icon: '⚡' },
-    { name: 'TailwindCSS', icon: '💨' },
-    { name: 'HTML/CSS', icon: '🌐' },
-    { name: 'Figma', icon: '🎨' }
+    { name: 'React', icon: 'react' },
+    { name: 'Next.js', icon: 'nextjs' },
+    { name: 'TypeScript', icon: 'typescript' },
+    { name: 'JavaScript', icon: 'javascript' },
+    { name: 'TailwindCSS', icon: 'tailwind' },
+    { name: 'HTML/CSS', icon: 'htmlcss' },
+    { name: 'Figma', icon: 'figma' }
   ],
   backend: [
-    { name: 'Python', icon: '🐍' },
-    { name: 'Java (Spring Boot)', icon: '☕' },
-    { name: 'Kotlin', icon: '🎯' },
-    { name: 'Node.js', icon: '💚' },
-    { name: 'FastAPI', icon: '⚡' },
-    { name: 'PostgreSQL', icon: '🐘' },
-    { name: 'MongoDB', icon: '🍃' },
-    { name: 'DynamoDB', icon: '🗄️' }
+    { name: 'Python', icon: 'python' },
+    { name: 'Java (Spring Boot)', icon: 'spring' },
+    { name: 'Kotlin', icon: 'kotlin' },
+    { name: 'Node.js', icon: 'node' },
+    { name: 'FastAPI', icon: 'fastapi' },
+    { name: 'PostgreSQL', icon: 'postgresql' },
+    { name: 'MongoDB', icon: 'mongodb' },
+    { name: 'DynamoDB', icon: 'dynamodb' }
   ],
   tools: [
-    { name: 'AWS (EC2/S3/Lambda)', icon: '☁️' },
-    { name: 'Docker', icon: '🐳' },
-    { name: 'Firebase', icon: '🔥' },
-    { name: 'OpenAI / LangChain', icon: '🤖' },
-    { name: 'n8n', icon: '🔄' },
-    { name: 'Git / GitHub', icon: '🐙' },
-    { name: 'CI/CD', icon: '🚀' },
-    { name: 'Kubernetes', icon: '⚙️' }
+    { name: 'AWS (EC2/S3/Lambda)', icon: 'aws' },
+    { name: 'Docker', icon: 'docker' },
+    { name: 'Firebase', icon: 'firebase' },
+    { name: 'OpenAI / LangChain', icon: 'openai' },
+    { name: 'n8n', icon: 'n8n' },
+    { name: 'Git / GitHub', icon: 'github' },
+    { name: 'CI/CD', icon: 'actions' },
+    { name: 'Kubernetes', icon: 'kubernetes' }
   ],
   learning: [
-    { name: 'Ciencia de Datos', icon: '📊' },
-    { name: 'Agentes de IA', icon: '🧠' },
-    { name: 'Flutter', icon: '💙' },
-    { name: 'Astro', icon: '🌠' }
+    { name: 'Ciencia de Datos', icon: 'pandas' },
+    { name: 'Agentes de IA', icon: 'openai' },
+    { name: 'Flutter', icon: 'flutter' },
+    { name: 'Astro', icon: 'astro' }
   ]
 };

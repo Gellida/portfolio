@@ -1,9 +1,23 @@
 import { Link } from 'react-router-dom';
 import Section from '../../components/Section';
+import Seo from '../../components/Seo';
 import { useLanguage } from '../../hooks/useLanguage';
 
 export default function PortfolioDetails() {
   const { language } = useLanguage();
+
+  const seo =
+    language === 'es'
+      ? {
+          title: 'Portafolio web personal',
+          description:
+            'Caso de estudio del portafolio web personal de José Gellida: arquitectura, tecnología, evidencias visuales y decisiones de diseño y despliegue.',
+        }
+      : {
+          title: 'Personal web portfolio',
+          description:
+            'Case study of José Gellida personal web portfolio: architecture, technology stack, visual evidence, and design and deployment decisions.',
+        };
 
   const tools =
     language === 'es'
@@ -76,6 +90,16 @@ export default function PortfolioDetails() {
 
   return (
     <div>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        path="/projects/portafolio-web"
+        language={language}
+        image="/portadaweb.png"
+        imageAlt={language === 'es' ? 'Portafolio web personal de José Gellida' : 'José Gellida personal web portfolio'}
+        type="article"
+      />
+
       <div className="relative overflow-hidden bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-16">
         <div className="pointer-events-none absolute -top-24 -right-20 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl"></div>
         <div className="pointer-events-none absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl"></div>
