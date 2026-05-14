@@ -3,7 +3,19 @@ import { useLocation } from 'react-router-dom';
 
 declare global {
   interface Window {
-    gtag: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+function safeGtag(...args: unknown[]) {
+  try {
+    if (typeof window === 'undefined' || typeof window.gtag !== 'function') {
+      return;
+    }
+
+    window.gtag(...args);
+  } catch {
+    // ignore analytics errors in client runtime
   }
 }
 
@@ -14,7 +26,7 @@ export function usePageTracking() {
   const location = useLocation();
 
   useEffect(() => {
-    window.gtag('event', 'page_view', {
+    safeGtag('event', 'page_view', {
       page_path: location.pathname + location.search,
       page_title: document.title,
     });
@@ -25,5 +37,5 @@ export function usePageTracking() {
  * Sends a custom event to Google Analytics.
  */
 export function trackEvent(eventName: string, params?: Record<string, string>) {
-  window.gtag('event', eventName, params);
+  safeGtag('event', eventName, params);
 }

@@ -58,7 +58,10 @@ export default function Projects() {
                 src={import.meta.env.BASE_URL + 'analytics.png'}
                 alt={language === 'es' ? 'Captura de analytics del proyecto' : 'Project analytics screenshot'}
                 className="w-full h-full object-cover object-center"
+                width={1280}
+                height={720}
                 loading="lazy"
+                decoding="async"
               />
             </div>
           </div>

@@ -58,18 +58,18 @@ export default function Home() {
               {t('home.hero.available')}
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-tight animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+            <h1 className="text-[clamp(1.85rem,3.9vw,3.6rem)] font-display font-extrabold leading-[1.06] tracking-tight animate-fade-in-up fade-delay-100">
               {t('home.hero.title.start')}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">{t('home.hero.title.data')}</span>{' '}
               {t('home.hero.title.middle')}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">{t('home.hero.title.solutions')}</span>.
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl animate-fade-in-up" style={{ animationDelay: '220ms' }}>
+            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl animate-fade-in-up fade-delay-220">
               {t('home.hero.description')}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-2 animate-fade-in-up" style={{ animationDelay: '340ms' }}>
+            <div className="flex flex-col sm:flex-row gap-4 pt-2 animate-fade-in-up fade-delay-340">
               <Link
                 to="/projects"
                 className="px-8 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors flex items-center justify-center"
@@ -84,7 +84,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="flex space-x-5 pt-2 animate-fade-in-up" style={{ animationDelay: '460ms' }}>
+            <div className="flex space-x-5 pt-2 animate-fade-in-up fade-delay-460">
               <a
                 href="https://github.com/gellida"
                 target="_blank"
@@ -113,7 +113,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hidden md:flex md:w-2/5 justify-end relative animate-fade-in-up" style={{ animationDelay: '180ms' }}>
+          <div className="hidden md:flex md:w-2/5 justify-end relative animate-fade-in-up fade-delay-180">
             <div className="relative border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-800/40 backdrop-blur-sm p-6 rounded-2xl w-full max-w-sm transform rotate-3 hover:rotate-0 transition-transform duration-500 shadow-xl">
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -162,7 +162,10 @@ export default function Home() {
                         src={import.meta.env.BASE_URL + 'yo.JPEG'}
                         alt={t('home.about.photoAlt')}
                         className="w-full h-full object-cover object-center"
+                        width={640}
+                        height={640}
                         loading="lazy"
+                        decoding="async"
                       />
                   </span>
                 </div>
@@ -177,16 +180,14 @@ export default function Home() {
                 {t('home.about.description')}
               </p>
               <div
-                className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/70 bg-gradient-to-br from-white via-slate-50 to-indigo-50/70 dark:from-slate-900/70 dark:via-slate-900/50 dark:to-indigo-900/20 p-4 sm:p-5 overflow-hidden animate-fade-in-up"
-                style={{ animationDelay: '100ms' }}
+                className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/70 bg-gradient-to-br from-white via-slate-50 to-indigo-50/70 dark:from-slate-900/70 dark:via-slate-900/50 dark:to-indigo-900/20 p-4 sm:p-5 overflow-hidden animate-fade-in-up fade-delay-100"
               >
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -top-12 right-0 w-40 h-40 rounded-full bg-indigo-400/20 blur-2xl"
                 />
                 <article
-                  className="relative rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/40 p-4 animate-fade-in-up transition-transform duration-300 hover:-translate-y-0.5"
-                  style={{ animationDelay: '220ms' }}
+                  className="relative rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/40 p-4 animate-fade-in-up fade-delay-220 transition-transform duration-300 hover:-translate-y-0.5"
                 >
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-2">
                     Impact
@@ -197,8 +198,7 @@ export default function Home() {
                   <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{t('home.about.experience')}</p>
                 </article>
                 <article
-                  className="relative rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/40 p-4 animate-fade-in-up transition-transform duration-300 hover:-translate-y-0.5"
-                  style={{ animationDelay: '320ms' }}
+                  className="relative rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/40 p-4 animate-fade-in-up fade-delay-320 transition-transform duration-300 hover:-translate-y-0.5"
                 >
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-2">
                     Build

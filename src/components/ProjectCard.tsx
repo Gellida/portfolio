@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { Project } from '../data/projects';
 import { Link } from 'react-router-dom';
 import { trackEvent } from '../hooks/useAnalytics';
@@ -7,7 +8,7 @@ interface ProjectCardProps {
   project: Project;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+function ProjectCard({ project }: ProjectCardProps) {
   const { language } = useLanguage();
   const title = language === 'en' ? (project.titleEn ?? project.title) : project.title;
   const description = language === 'en' ? (project.descriptionEn ?? project.description) : project.description;
@@ -25,7 +26,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                         src={import.meta.env.BASE_URL + 'portadawebclaro.png'}
                         alt={language === 'es' ? 'Imagen del proyecto' : 'Project image'}
                         className="w-full h-full object-cover object-center"
+                        width={640}
+                        height={360}
                         loading="lazy"
+                        decoding="async"
                       />
             </span>
 
@@ -82,3 +86,5 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     </div>
   );
 }
+
+export default memo(ProjectCard);

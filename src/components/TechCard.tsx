@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { Technology } from '../data/technologies';
 import type { IconType } from 'react-icons';
 import { FaAws } from 'react-icons/fa6';
@@ -68,7 +69,7 @@ const logos: Record<string, LogoItem> = {
   astro: { icon: SiAstro, className: 'text-orange-500' }
 };
 
-export default function TechCard({ category, technologies, color }: TechCardProps) {
+function TechCard({ category, technologies, color }: TechCardProps) {
   const colorClasses: Record<string, string> = {
     cyan: 'text-cyan-600 dark:text-cyan-400',
     gray: 'text-gray-700 dark:text-gray-200',
@@ -111,3 +112,5 @@ export default function TechCard({ category, technologies, color }: TechCardProp
     </div>
   );
 }
+
+export default memo(TechCard);

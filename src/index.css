@@ -22,3 +22,29 @@
 		font-family: 'Syne', sans-serif;
 	}
 }
+
+@layer utilities {
+	.fade-delay-100 {
+		animation-delay: 100ms;
+	}
+
+	.fade-delay-180 {
+		animation-delay: 180ms;
+	}
+
+	.fade-delay-220 {
+		animation-delay: 220ms;
+	}
+
+	.fade-delay-320 {
+		animation-delay: 320ms;
+	}
+
+	.fade-delay-340 {
+		animation-delay: 340ms;
+	}
+
+	.fade-delay-460 {
+		animation-delay: 460ms;
+	}
+}
