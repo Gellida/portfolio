@@ -3,6 +3,8 @@
 interface ImportMetaEnv {
   readonly VITE_WEB3FORMS_ACCESS_KEY: string
   readonly VITE_SITE_URL?: string
+  readonly VITE_OCULARIA_API_BASE_URL?: string
+  readonly VITE_OCULARIA_MAX_SUBMISSIONS?: string
 }
 
 interface ImportMeta {

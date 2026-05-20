@@ -4,12 +4,14 @@ import type { Language } from '../hooks/useLanguage';
 interface SeoProps {
   title: string;
   description: string;
-  path: string;
-  language: Language;
+  path?: string;
+  language?: Language;
   image?: string;
   imageAlt?: string;
   type?: 'website' | 'article';
   noIndex?: boolean;
+  keywords?: string;
+  canonical?: string;
 }
 
 const SITE_NAME = 'José Gellida';
@@ -51,16 +53,18 @@ function upsertTag(tagName: 'meta' | 'link', selector: string, attributes: Recor
 export default function Seo({
   title,
   description,
-  path,
-  language,
+  path = '/',
+  language = 'es',
   image = '/portadaweb.png',
   imageAlt = 'José Gellida portfolio preview',
   type = 'website',
   noIndex = false,
+  keywords,
+  canonical,
 }: SeoProps) {
   useEffect(() => {
     const fullTitle = `${title} | ${SITE_NAME}`;
-    const canonicalUrl = toAbsoluteUrl(path);
+    const canonicalUrl = canonical || toAbsoluteUrl(path);
     const imageUrl = toAbsoluteUrl(image);
     const robotsContent = noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
     const ogLocale = language === 'es' ? 'es_ES' : 'en_US';
@@ -71,6 +75,7 @@ export default function Seo({
 
     const managedKeys = [
       'seo-description',
+      'seo-keywords',
       'seo-robots',
       'seo-canonical',
       'seo-og-title',
@@ -94,6 +99,16 @@ export default function Seo({
       name: 'description',
       content: description,
     });
+
+    if (keywords) {
+      upsertTag('meta', 'meta[data-seo="seo-keywords"]', {
+        'data-seo': 'seo-keywords',
+        name: 'keywords',
+        content: keywords,
+      });
+    } else {
+      document.head.querySelector('meta[data-seo="seo-keywords"]')?.remove();
+    }
 
     upsertTag('meta', 'meta[data-seo="seo-robots"]', {
       'data-seo': 'seo-robots',
@@ -200,7 +215,7 @@ export default function Seo({
         });
       });
     };
-  }, [description, image, imageAlt, language, noIndex, path, title, type]);
+  }, [description, image, imageAlt, language, noIndex, path, title, type, keywords, canonical]);
 
   return null;
 }
