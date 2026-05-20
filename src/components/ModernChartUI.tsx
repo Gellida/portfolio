@@ -1,5 +1,4 @@
-import React from 'react';
-import { TrendingUp, Activity, Target } from 'lucide-react';
+import React from 'react'; 
 
 interface MetricCardProps {
   icon: React.ReactNode;

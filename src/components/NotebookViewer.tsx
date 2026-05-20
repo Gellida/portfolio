@@ -9,8 +9,7 @@ interface NotebookViewerProps {
   description: string;
 }
 
-export const NotebookViewer: React.FC<NotebookViewerProps> = ({
-  googleDriveLink,
+export const NotebookViewer: React.FC<NotebookViewerProps> = ({ 
   googleColabLink,
   kaggleDatasetLink,
   notebookTitle,
