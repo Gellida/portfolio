@@ -1,6 +1,6 @@
 const DEFAULT_API_BASE_URL = 'https://marco-explain-compiled-leonard.trycloudflare.com';
 const QUESTION_COUNT = 6;
-const DEFAULT_MAX_SUBMISSIONS = 10;
+const DEFAULT_MAX_SUBMISSIONS = 25;
 const SUBMISSION_COUNT_STORAGE_KEY = 'ocularia_submission_count_v1';
 
 export interface OculariaSubmissionLimitState {
