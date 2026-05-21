@@ -27,6 +27,8 @@ jobs:
         env:
           VITE_WEB3FORMS_ACCESS_KEY: ${{ secrets.VITE_WEB3FORMS_ACCESS_KEY }}
           VITE_SITE_URL: https://www.josegellida.com
+          VITE_OCULARIA_API_BASE_URL: ${{ secrets.VITE_OCULARIA_API_BASE_URL }}
+          VITE_OCULARIA_MAX_SUBMISSIONS: ${{ secrets.VITE_OCULARIA_MAX_SUBMISSIONS }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
