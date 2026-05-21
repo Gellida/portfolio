@@ -1,4 +1,3 @@
-const DEFAULT_API_BASE_URL = 'https://marco-explain-compiled-leonard.trycloudflare.com';
 const QUESTION_COUNT = 6;
 const DEFAULT_MAX_SUBMISSIONS = 25;
 const SUBMISSION_COUNT_STORAGE_KEY = 'ocularia_submission_count_v1';
@@ -43,14 +42,43 @@ export interface OculariaResponse {
   };
 }
 
+export interface ImpactoFactoresRequest {
+  nombre: string;
+  respuestas: number[];
+  medicamentos?: string[];
+  factores_hormonales?: string[];
+  factores_ambientales?: string[];
+  enfermedades?: string[];
+  antecedentes_oculares?: string[];
+  cirugia_ocular_previa?: string[];
+}
+
+export interface ImpactoFactoresResponse {
+  success: boolean;
+  puntuacion: {
+    total: number;
+    maximo: number;
+  };
+  resumen: string;
+}
+
 function getApiBaseUrl(): string {
   const configured = import.meta.env.VITE_OCULARIA_API_BASE_URL?.trim();
-  const raw = configured && configured.length > 0 ? configured : DEFAULT_API_BASE_URL;
-  const baseUrl = raw.replace(/\/$/, '');
+  
+  if (!configured || configured.length === 0) {
+    throw new Error(
+      'VITE_OCULARIA_API_BASE_URL no está configurada. ' +
+      'Por favor define esta variable de entorno en tu archivo .env o durante el deploy.'
+    );
+  }
+  
+  const baseUrl = configured.replace(/\/$/, '');
+  
   // Forzar HTTPS para proteger datos del paciente en tránsito
   if (baseUrl.startsWith('http://')) {
     throw new Error('La URL de la API debe usar HTTPS para proteger los datos del paciente.');
   }
+  
   return baseUrl;
 }
 
@@ -253,6 +281,107 @@ export async function evaluarOcularia(payload: OculariaRequest): Promise<Oculari
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
       throw new Error('La solicitud tardo demasiado. Intentalo de nuevo en unos segundos.');
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+}
+
+function sanitizeStringArray(arr: string[] | undefined, maxItems = 20, maxLen = 200): string[] {
+  if (!Array.isArray(arr)) return [];
+  return arr
+    .slice(0, maxItems)
+    .map(s => sanitizeText(String(s)).slice(0, maxLen))
+    .filter(Boolean);
+}
+
+/**
+ * Strips parenthetical drug/item lists before sending to the API to reduce token count.
+ * "Antihistamínicos (Loratadina, Clorfenamina...)" → "Antihistamínicos"  (~60 tokens saved worst-case)
+ */
+function compressForApi(value: string): string {
+  return value.replace(/\s*\([^)]+\)/g, '').trim();
+}
+
+function isValidImpactoResponse(value: unknown): value is ImpactoFactoresResponse {
+  if (!value || typeof value !== 'object') return false;
+  const data = value as Partial<ImpactoFactoresResponse>;
+  return (
+    typeof data.success === 'boolean' &&
+    !!data.puntuacion &&
+    typeof (data.puntuacion as { total?: unknown }).total === 'number' &&
+    typeof (data.puntuacion as { maximo?: unknown }).maximo === 'number' &&
+    isSafeString(data.resumen)
+  );
+}
+
+export async function evaluarImpactoFactores(
+  payload: ImpactoFactoresRequest,
+): Promise<ImpactoFactoresResponse> {
+  const nombre = sanitizeText(payload.nombre);
+  if (!nombre || nombre.length > 80) throw new Error('El nombre no es valido.');
+  assertNameSafe(nombre, 'nombre');
+
+  if (!Array.isArray(payload.respuestas) || payload.respuestas.length !== QUESTION_COUNT) {
+    throw new Error('Se requieren las 6 respuestas del cuestionario.');
+  }
+  const respuestas = payload.respuestas.map(s => {
+    if (!Number.isInteger(s) || s < 0 || s > 4) throw new Error('Cada respuesta debe estar entre 0 y 4.');
+    return s;
+  });
+
+  const medicamentos = sanitizeStringArray(payload.medicamentos).map(compressForApi);
+  const factores_hormonales = sanitizeStringArray(payload.factores_hormonales).map(compressForApi);
+  const factores_ambientales = sanitizeStringArray(payload.factores_ambientales).map(compressForApi);
+  const enfermedades = sanitizeStringArray(payload.enfermedades).map(compressForApi);
+  const antecedentes_oculares = sanitizeStringArray(payload.antecedentes_oculares).map(compressForApi);
+  const cirugia_ocular_previa = sanitizeStringArray(payload.cirugia_ocular_previa).map(compressForApi);
+
+  const hasOptional = [
+    medicamentos, factores_hormonales, factores_ambientales,
+    enfermedades, antecedentes_oculares, cirugia_ocular_previa,
+  ].some(a => a.length > 0);
+  if (!hasOptional) throw new Error('Selecciona al menos un factor para el análisis de impacto.');
+
+  const body: Record<string, unknown> = { nombre, respuestas };
+  if (medicamentos.length) body.medicamentos = medicamentos;
+  if (factores_hormonales.length) body.factores_hormonales = factores_hormonales;
+  if (factores_ambientales.length) body.factores_ambientales = factores_ambientales;
+  if (enfermedades.length) body.enfermedades = enfermedades;
+  if (antecedentes_oculares.length) body.antecedentes_oculares = antecedentes_oculares;
+  if (cirugia_ocular_previa.length) body.cirugia_ocular_previa = cirugia_ocular_previa;
+
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 20000);
+
+  try {
+    const response = await fetch(`${getApiBaseUrl()}/api/diagnostico/impacto-factores`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
+
+    const json = (await response.json()) as unknown;
+
+    if (!response.ok) {
+      const apiMessage =
+        json && typeof json === 'object' && 'error' in json &&
+        typeof (json as { error?: unknown }).error === 'string'
+          ? (json as { error: string }).error
+          : 'No se pudo procesar el análisis de factores.';
+      throw new Error(apiMessage);
+    }
+
+    if (!isValidImpactoResponse(json)) {
+      throw new Error('La API devolvio un formato inesperado en el análisis de factores.');
+    }
+
+    return json;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new Error('La solicitud tardó demasiado. Inténtalo de nuevo.');
     }
     throw error;
   } finally {

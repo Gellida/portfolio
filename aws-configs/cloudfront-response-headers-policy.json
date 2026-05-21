@@ -1,0 +1,44 @@
+{
+  "ResponseHeadersPolicyConfig": {
+    "Name": "PortfolioSecurityHeaders",
+    "Comment": "Security headers policy for José Gellida portfolio static site",
+    "SecurityHeadersConfig": {
+      "StrictTransportSecurity": {
+        "AccessControlMaxAgeSec": 63072000,
+        "IncludeSubdomains": true,
+        "Preload": true,
+        "Override": true
+      },
+      "ContentTypeOptions": {
+        "Override": true
+      },
+      "FrameOptions": {
+        "FrameOption": "DENY",
+        "Override": true
+      },
+      "XSSProtection": {
+        "ModeBlock": true,
+        "Protection": true,
+        "Override": true
+      },
+      "ReferrerPolicy": {
+        "ReferrerPolicy": "strict-origin-when-cross-origin",
+        "Override": true
+      }
+    },
+    "CustomHeadersConfig": {
+      "Items": [
+        {
+          "Header": "Permissions-Policy",
+          "Value": "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()",
+          "Override": true
+        },
+        {
+          "Header": "Content-Security-Policy",
+          "Value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://*.trycloudflare.com https://www.google-analytics.com; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; media-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
+          "Override": true
+        }
+      ]
+    }
+  }
+}
