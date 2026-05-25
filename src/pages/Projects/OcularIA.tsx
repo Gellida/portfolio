@@ -2,8 +2,8 @@
 import { Link } from 'react-router-dom';
 import Seo from '../../components/Seo';
 import { useLanguage } from '../../hooks/useLanguage';
-import { evaluarOcularia, evaluarImpactoFactores, getOculariaSubmissionLimitState } from '../../services/ocularia.service';
-import type { OculariaResponse, ImpactoFactoresResponse } from '../../services/ocularia.service';
+import { evaluarOcularia, evaluarImpactoFactores, guardarFormulario, getOculariaSubmissionLimitState } from '../../services/ocularia.service';
+import type { OculariaResponse, ImpactoFactoresResponse, FormularioCompleto } from '../../services/ocularia.service';
 
 type Sexo = 'F' | 'M' | 'Otro';
 type EstadoEvaluacion = 'idle' | 'loading' | 'success' | 'error';
@@ -11,7 +11,8 @@ type EstadoEvaluacion = 'idle' | 'loading' | 'success' | 'error';
 interface PatientFormData {
   nombre: string;
   apellidos: string;
-  edad: string;
+  fechaNacimiento: string;
+  codigoPostal: string;
   sexo: Sexo;
 }
 
@@ -22,7 +23,10 @@ interface FactorFormData {
   factoresAmbientales: string[];
   factoresHormonales: string[];
   enfermedades: string[];
+  otrosFactores: string;
 }
+
+type FactorArrayField = Exclude<keyof FactorFormData, 'otrosFactores'>;
 
 const MEDICAMENTOS_OPTIONS = [
   'Antihistamínicos (Loratadina, Clorfenamina, Cetirizina, Levocetirizina, Desloratadina)',
@@ -31,6 +35,8 @@ const MEDICAMENTOS_OPTIONS = [
   'Diuéticos (Hidroclorotiazida, Furosemida)',
   'Isotretinoina',
   'Quimioterapia',
+  'Inmunoterapia',
+  'Otros',
 ];
 
 const ANTECEDENTES_OCULARES_OPTIONS = [
@@ -65,6 +71,7 @@ const ENFERMEDADES_OPTIONS = [
   'Enfermedad de Parkinson',
   'Rosácea',
   'Acné',
+  'Otros',
 ];
 
 const QUESTIONS_ES = [
@@ -192,13 +199,28 @@ function getTodayISODate(): string {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 }
 
+function getAgeFromBirthDate(birthDateISO: string): number | null {
+  if (!birthDateISO) return null;
+  const birthDate = new Date(`${birthDateISO}T00:00:00`);
+  if (Number.isNaN(birthDate.getTime())) return null;
+
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age -= 1;
+  }
+
+  return age;
+}
+
 // Floating label input
 function FloatingInput({
   id, name, type = 'text', value, onChange, label, disabled, required, min, max,
 }: {
   id: string; name: string; type?: string; value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string; disabled: boolean; required?: boolean; min?: number; max?: number;
+  label: string; disabled: boolean; required?: boolean; min?: number | string; max?: number | string;
 }) {
   const [focused, setFocused] = useState(false);
   const active = focused || value.length > 0;
@@ -268,7 +290,7 @@ export default function OcularIA() {
   const TOTAL_STEPS = questions.length + 3; // step 0 = patient, 1-6 = questions, 7 = factors, 8 = review
 
   const [wizardStep, setWizardStep] = useState(0);
-  const [formData, setFormData] = useState<PatientFormData>({ nombre: '', apellidos: '', edad: '', sexo: 'F' });
+  const [formData, setFormData] = useState<PatientFormData>({ nombre: '', apellidos: '', fechaNacimiento: '', codigoPostal: '', sexo: 'F' });
   const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(-1));
   const [status, setStatus] = useState<EstadoEvaluacion>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -279,11 +301,12 @@ export default function OcularIA() {
 
   const [factorData, setFactorData] = useState<FactorFormData>({
     medicamentos: [], antecedentesOculares: [], cirugiaOcularPrevia: [],
-    factoresAmbientales: [], factoresHormonales: [], enfermedades: [],
+    factoresAmbientales: [], factoresHormonales: [], enfermedades: [], otrosFactores: '',
   });
   const [factorImpact, setFactorImpact] = useState<ImpactoFactoresResponse | null>(null);
+  const [factoresConsentidos, setFactoresConsentidos] = useState(false);
 
-  const toggleFactor = (field: keyof FactorFormData, value: string) => {
+  const toggleFactor = (field: FactorArrayField, value: string) => {
     setFactorData(prev => ({
       ...prev,
       [field]: prev[field].includes(value)
@@ -297,7 +320,11 @@ export default function OcularIA() {
   const hasAnyFactor = [
     factorData.medicamentos, factorData.antecedentesOculares, factorData.cirugiaOcularPrevia,
     factorData.factoresAmbientales, factorData.factoresHormonales, factorData.enfermedades,
-  ].some(a => a.length > 0);
+  ].some(a => a.length > 0) || factorData.otrosFactores.trim().length > 0;
+
+  const handleOtherFactorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFactorData(prev => ({ ...prev, otrosFactores: e.target.value }));
+  };
 
   const seo = isSpanish
     ? { title: 'OcularIA: evaluador de ojo seco con IA', description: 'Cuestionario digital de 6 preguntas que analiza sintomas de ojo seco con IA y devuelve riesgo clinico orientativo y recomendaciones.' }
@@ -350,10 +377,19 @@ export default function OcularIA() {
     setResult(null);
     lastSubmitRef.current = now;
 
-    const edad = Number(formData.edad);
-    if (!formData.nombre.trim() || !formData.apellidos.trim() || !Number.isInteger(edad)) {
+    const edad = getAgeFromBirthDate(formData.fechaNacimiento);
+    if (!formData.nombre.trim() || !formData.apellidos.trim() || !formData.fechaNacimiento || !formData.codigoPostal.trim() || edad === null || !Number.isInteger(edad)) {
       setStatus('error');
-      setErrorMessage(isSpanish ? 'Completa nombre, apellidos y edad valida.' : 'Please complete first name, last name, and valid age.');
+      setErrorMessage(isSpanish
+        ? 'Completa nombre, apellidos, fecha de nacimiento y código postal válidos.'
+        : 'Please complete first name, last name, valid birth date and postal code.');
+      return;
+    }
+    if (edad < 1 || edad > 120) {
+      setStatus('error');
+      setErrorMessage(isSpanish
+        ? 'La fecha de nacimiento debe corresponder a una edad entre 1 y 120 años.'
+        : 'Birth date must correspond to an age between 1 and 120 years.');
       return;
     }
     if (unansweredCount > 0) {
@@ -366,28 +402,57 @@ export default function OcularIA() {
       const apiResponse = await evaluarOcularia({
         nombre: formData.nombre, apellidos: formData.apellidos, edad,
         sexo: formData.sexo, fecha: getTodayISODate(), respuestas: answers,
+        fecha_nacimiento: formData.fechaNacimiento,
+        codigo_postal: formData.codigoPostal.trim() || undefined,
       });
       let impactResponse: ImpactoFactoresResponse | null = null;
       const hasFactorsForApi = [
         factorData.medicamentos, factorData.antecedentesOculares, factorData.cirugiaOcularPrevia,
         factorData.factoresAmbientales, factorData.factoresHormonales, factorData.enfermedades,
-      ].some(a => a.length > 0);
+      ].some(a => a.length > 0) || factorData.otrosFactores.trim().length > 0;
       if (hasFactorsForApi) {
         try {
           impactResponse = await evaluarImpactoFactores({
             nombre: formData.nombre,
+            apellidos: formData.apellidos,
+            edad,
+            sexo: formData.sexo,
             respuestas: answers,
             ...(factorData.medicamentos.length ? { medicamentos: factorData.medicamentos } : {}),
             ...(factorData.factoresHormonales.length ? { factores_hormonales: factorData.factoresHormonales } : {}),
             ...(factorData.factoresAmbientales.length ? { factores_ambientales: factorData.factoresAmbientales } : {}),
             ...(factorData.enfermedades.length ? { enfermedades: factorData.enfermedades } : {}),
             ...(factorData.antecedentesOculares.length ? { antecedentes_oculares: factorData.antecedentesOculares } : {}),
-            ...(factorData.cirugiaOcularPrevia.length ? { cirugia_ocular_previa: factorData.cirugiaOcularPrevia } : {}),
+            ...(factorData.cirugiaOcularPrevia.length ? { cirugia_ocular: factorData.cirugiaOcularPrevia } : {}),
+            ...(factorData.otrosFactores.trim().length ? { otros_factores: factorData.otrosFactores.trim() } : {}),
           });
         } catch {
           // El análisis de factores es suplementario; ignoramos fallos silenciosamente.
         }
       }
+
+      // Guardar formulario completo en PostgreSQL de forma asincrónica (sin bloquear resultado)
+      const formularioCompleto: FormularioCompleto = {
+        nombre: formData.nombre,
+        apellidos: formData.apellidos,
+        fecha_nacimiento: formData.fechaNacimiento,
+        codigo_postal: formData.codigoPostal.trim() || undefined,
+        sexo: formData.sexo,
+        respuestas: answers,
+        ...(factorData.medicamentos.length ? { medicamentos: factorData.medicamentos } : {}),
+        ...(factorData.factoresHormonales.length ? { factores_hormonales: factorData.factoresHormonales } : {}),
+        ...(factorData.factoresAmbientales.length ? { factores_ambientales: factorData.factoresAmbientales } : {}),
+        ...(factorData.enfermedades.length ? { enfermedades: factorData.enfermedades } : {}),
+        ...(factorData.antecedentesOculares.length ? { antecedentes_oculares: factorData.antecedentesOculares } : {}),
+        ...(factorData.cirugiaOcularPrevia.length ? { cirugia_ocular_previa: factorData.cirugiaOcularPrevia } : {}),
+        ...(factorData.otrosFactores.trim().length ? { otros_factores: factorData.otrosFactores.trim() } : {}),
+        fecha_completado: getTodayISODate(),
+      };
+      // Fire and forget - no esperamos respuesta
+      guardarFormulario(formularioCompleto).catch(() => {
+        // Error ya logueado en guardarFormulario
+      });
+
       setResult(apiResponse);
       if (impactResponse) setFactorImpact(impactResponse);
       setStatus('success');
@@ -400,9 +465,10 @@ export default function OcularIA() {
   }, [formData, answers, unansweredCount, isSpanish, SUBMIT_COOLDOWN_MS, factorData]);
 
   const resetAll = () => {
-    setFormData({ nombre: '', apellidos: '', edad: '', sexo: 'F' });
+    setFormData({ nombre: '', apellidos: '', fechaNacimiento: '', codigoPostal: '', sexo: 'F' });
     setAnswers(Array(questions.length).fill(-1));
-    setFactorData({ medicamentos: [], antecedentesOculares: [], cirugiaOcularPrevia: [], factoresAmbientales: [], factoresHormonales: [], enfermedades: [] });
+    setFactorData({ medicamentos: [], antecedentesOculares: [], cirugiaOcularPrevia: [], factoresAmbientales: [], factoresHormonales: [], enfermedades: [], otrosFactores: '' });
+    setFactoresConsentidos(false);
     setStatus('idle');
     setErrorMessage('');
     setResult(null);
@@ -415,7 +481,11 @@ export default function OcularIA() {
   const currentAnswer = questionIndex >= 0 && questionIndex < questions.length ? answers[questionIndex] : -1;
 
   // Patient info validation for step 0 "continue"
-  const patientValid = formData.nombre.trim().length > 0 && formData.apellidos.trim().length > 0 && formData.edad.length > 0;
+  const patientValid =
+    formData.nombre.trim().length > 0 &&
+    formData.apellidos.trim().length > 0 &&
+    formData.fechaNacimiento.length > 0 &&
+    formData.codigoPostal.trim().length > 0;
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
@@ -626,8 +696,12 @@ export default function OcularIA() {
                     <FloatingInput id="apellidos" name="apellidos" value={formData.apellidos}
                       onChange={handlePatientChange} label={isSpanish ? 'Apellidos' : 'Last name'} disabled={false} required />
                   </div>
-                  <FloatingInput id="edad" name="edad" type="number" value={formData.edad}
-                    onChange={handlePatientChange} label={isSpanish ? 'Edad' : 'Age'} disabled={false} required min={1} max={120} />
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <FloatingInput id="fechaNacimiento" name="fechaNacimiento" type="date" value={formData.fechaNacimiento}
+                      onChange={handlePatientChange} label={isSpanish ? 'Fecha de nacimiento' : 'Birth date'} disabled={false} required max={getTodayISODate()} />
+                    <FloatingInput id="codigoPostal" name="codigoPostal" value={formData.codigoPostal}
+                      onChange={handlePatientChange} label={isSpanish ? 'Código postal' : 'Postal code'} disabled={false} required />
+                  </div>
 
                   {/* Gender segmented control */}
                   <div>
@@ -811,6 +885,17 @@ export default function OcularIA() {
                       ))}
                     </div>
                   </FactorSection>
+
+                  <div className="pt-1">
+                    <FloatingInput
+                      id="otrosFactores"
+                      name="otrosFactores"
+                      value={factorData.otrosFactores}
+                      onChange={handleOtherFactorChange}
+                      label={isSpanish ? 'Otros (especificar)' : 'Other (specify)'}
+                      disabled={false}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex gap-3">
@@ -821,13 +906,37 @@ export default function OcularIA() {
                     </svg>
                     {isSpanish ? 'Anterior' : 'Back'}
                   </button>
-                  <button type="button" onClick={() => setWizardStep(TOTAL_STEPS - 1)}
-                    className="group flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-sm tracking-wide transition-all duration-200 shadow-lg shadow-cyan-500/20">
+                  <button type="button" onClick={() => setWizardStep(TOTAL_STEPS - 1)} disabled={!factoresConsentidos}
+                    className="group flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 disabled:bg-slate-200 dark:disabled:bg-slate-700 text-white disabled:text-slate-400 font-semibold text-sm tracking-wide transition-all duration-200 shadow-lg shadow-cyan-500/20 disabled:shadow-none">
                     {isSpanish ? 'Continuar' : 'Continue'}
                     <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </button>
+                </div>
+
+                <div className="mt-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50">
+                  <label className="flex items-start gap-2.5 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={factoresConsentidos}
+                      onChange={() => setFactoresConsentidos(prev => !prev)}
+                      className="sr-only"
+                    />
+                    <span className={`mt-0.5 flex-shrink-0 w-4 h-4 rounded border-2 transition-all flex items-center justify-center
+                      ${factoresConsentidos ? 'border-cyan-500 bg-cyan-500' : 'border-slate-300 dark:border-slate-600 group-hover:border-cyan-400'}`}>
+                      {factoresConsentidos && (
+                        <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </span>
+                    <span className="text-sm leading-snug text-slate-600 dark:text-slate-300">
+                      {isSpanish
+                        ? 'Entiendo y quiero continuar. Acepto que la información ingresada se usa para este análisis orientativo y no reemplaza una valoración médica profesional.'
+                        : 'I understand and want to continue. I accept that the information entered is used for this indicative analysis and does not replace a professional medical evaluation.'}
+                    </span>
+                  </label>
                 </div>
               </div>
             )}
@@ -851,7 +960,7 @@ export default function OcularIA() {
                     {isSpanish ? 'Paciente' : 'Patient'}
                   </p>
                   <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
-                    {formData.nombre} {formData.apellidos} · {formData.edad} {isSpanish ? 'años' : 'y/o'} · {formData.sexo === 'F' ? (isSpanish ? 'Femenino' : 'Female') : formData.sexo === 'M' ? (isSpanish ? 'Masculino' : 'Male') : (isSpanish ? 'Otro' : 'Other')}
+                    {formData.nombre} {formData.apellidos} · {formData.fechaNacimiento} · {formData.codigoPostal} · {formData.sexo === 'F' ? (isSpanish ? 'Femenino' : 'Female') : formData.sexo === 'M' ? (isSpanish ? 'Masculino' : 'Male') : (isSpanish ? 'Otro' : 'Other')}
                   </p>
                 </div>
 
@@ -893,6 +1002,7 @@ export default function OcularIA() {
                         ...factorData.factoresAmbientales,
                         ...factorData.factoresHormonales,
                         ...factorData.enfermedades,
+                        ...(factorData.otrosFactores.trim().length ? [factorData.otrosFactores.trim()] : []),
                       ].map((f, i) => (
                         <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-cyan-50 dark:bg-cyan-900/20 text-cyan-700 dark:text-cyan-300 border border-cyan-100 dark:border-cyan-800/40">
                           {f}

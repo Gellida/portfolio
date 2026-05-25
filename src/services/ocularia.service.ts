@@ -16,6 +16,8 @@ export interface OculariaRequest {
   sexo: 'F' | 'M' | 'Otro';
   fecha: string;
   respuestas: number[];
+  fecha_nacimiento?: string;
+  codigo_postal?: string;
 }
 
 export interface OculariaResponse {
@@ -44,13 +46,17 @@ export interface OculariaResponse {
 
 export interface ImpactoFactoresRequest {
   nombre: string;
+  apellidos: string;
+  edad: number;
+  sexo: 'F' | 'M' | 'Otro';
   respuestas: number[];
   medicamentos?: string[];
   factores_hormonales?: string[];
   factores_ambientales?: string[];
   enfermedades?: string[];
   antecedentes_oculares?: string[];
-  cirugia_ocular_previa?: string[];
+  cirugia_ocular?: string[];
+  otros_factores?: string;
 }
 
 export interface ImpactoFactoresResponse {
@@ -60,6 +66,23 @@ export interface ImpactoFactoresResponse {
     maximo: number;
   };
   resumen: string;
+}
+
+export interface FormularioCompleto {
+  nombre: string;
+  apellidos: string;
+  fecha_nacimiento?: string;
+  codigo_postal?: string;
+  sexo: 'F' | 'M' | 'Otro';
+  respuestas: number[];
+  medicamentos?: string[];
+  factores_hormonales?: string[];
+  factores_ambientales?: string[];
+  enfermedades?: string[];
+  antecedentes_oculares?: string[];
+  cirugia_ocular_previa?: string[];
+  otros_factores?: string;
+  fecha_completado: string;
 }
 
 function getApiBaseUrl(): string {
@@ -80,6 +103,34 @@ function getApiBaseUrl(): string {
   }
   
   return baseUrl;
+}
+
+function getApiHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  };
+  const secret = import.meta.env.VITE_OCULARIA_API_SECRET?.trim();
+  if (secret && secret.length > 0) {
+    headers['Authorization'] = `Bearer ${secret}`;
+  }
+  return headers;
+}
+
+function extractApiError(json: unknown, requestId?: string | null): string {
+  const base =
+    json &&
+    typeof json === 'object' &&
+    'error' in json &&
+    typeof (json as { error?: unknown }).error === 'string'
+      ? (json as { error: string }).error
+      : 'No se pudo procesar la solicitud.';
+  const rid =
+    requestId ??
+    (json && typeof json === 'object' && 'requestId' in json
+      ? String((json as { requestId?: unknown }).requestId)
+      : null);
+  return rid ? `${base} (ref: ${rid})` : base;
 }
 
 function getMaxSubmissions(): number {
@@ -141,6 +192,8 @@ export function getOculariaSubmissionLimitState(): OculariaSubmissionLimitState 
 
 // Allowlist: solo letras (incluidas tildes/diéresis), espacios, guiones y apóstrofes.
 const NAME_ALLOWLIST_RE = /^[\p{L}\s'\-]{1,}$/u;
+// Código postal: alfanumérico, espacios y guiones, 1-10 chars
+const POSTAL_CODE_RE = /^[A-Za-z0-9\s\-]{1,10}$/
 
 function sanitizeText(value: string): string {
   return value.replace(/\s+/g, ' ').trim();
@@ -198,6 +251,23 @@ function validateRequest(payload: OculariaRequest): OculariaRequest {
     return score;
   });
 
+  // Campos opcionales nuevos
+  let fecha_nacimiento: string | undefined;
+  if (payload.fecha_nacimiento) {
+    const fn = sanitizeText(payload.fecha_nacimiento);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(fn)) throw new Error('La fecha de nacimiento no tiene formato valido.');
+    const fnDate = new Date(`${fn}T00:00:00`);
+    if (isNaN(fnDate.getTime())) throw new Error('La fecha de nacimiento no es una fecha valida.');
+    fecha_nacimiento = fn;
+  }
+
+  let codigo_postal: string | undefined;
+  if (payload.codigo_postal) {
+    const cp = sanitizeText(payload.codigo_postal).slice(0, 10);
+    if (!POSTAL_CODE_RE.test(cp)) throw new Error('El codigo postal contiene caracteres no permitidos.');
+    codigo_postal = cp;
+  }
+
   return {
     nombre,
     apellidos,
@@ -205,6 +275,8 @@ function validateRequest(payload: OculariaRequest): OculariaRequest {
     sexo,
     fecha,
     respuestas: normalizedScores,
+    ...(fecha_nacimiento ? { fecha_nacimiento } : {}),
+    ...(codigo_postal ? { codigo_postal } : {}),
   };
 }
 
@@ -250,25 +322,16 @@ export async function evaluarOcularia(payload: OculariaRequest): Promise<Oculari
   try {
     const response = await fetch(`${getApiBaseUrl()}/api/diagnostico/tratamiento`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
+      headers: getApiHeaders(),
       body: JSON.stringify(safePayload),
       signal: controller.signal,
     });
 
+    const requestId = response.headers.get('X-Request-Id');
     const json = (await response.json()) as unknown;
 
     if (!response.ok) {
-      const apiMessage =
-        json &&
-        typeof json === 'object' &&
-        'error' in json &&
-        typeof (json as { error?: unknown }).error === 'string'
-          ? (json as { error: string }).error
-          : 'No se pudo procesar la evaluacion clinica.';
-      throw new Error(apiMessage);
+      throw new Error(extractApiError(json, requestId));
     }
 
     if (!isValidResponse(json)) {
@@ -323,6 +386,20 @@ export async function evaluarImpactoFactores(
   if (!nombre || nombre.length > 80) throw new Error('El nombre no es valido.');
   assertNameSafe(nombre, 'nombre');
 
+  const apellidos = sanitizeText(payload.apellidos);
+  if (!apellidos || apellidos.length > 80) throw new Error('Los apellidos no son validos.');
+  assertNameSafe(apellidos, 'apellidos');
+
+  const edad = Number(payload.edad);
+  if (!Number.isInteger(edad) || edad < 1 || edad > 120) {
+    throw new Error('La edad debe estar entre 1 y 120 años.');
+  }
+
+  const sexo = payload.sexo;
+  if (!['F', 'M', 'Otro'].includes(sexo)) {
+    throw new Error('El sexo debe ser F, M u Otro.');
+  }
+
   if (!Array.isArray(payload.respuestas) || payload.respuestas.length !== QUESTION_COUNT) {
     throw new Error('Se requieren las 6 respuestas del cuestionario.');
   }
@@ -336,21 +413,24 @@ export async function evaluarImpactoFactores(
   const factores_ambientales = sanitizeStringArray(payload.factores_ambientales).map(compressForApi);
   const enfermedades = sanitizeStringArray(payload.enfermedades).map(compressForApi);
   const antecedentes_oculares = sanitizeStringArray(payload.antecedentes_oculares).map(compressForApi);
-  const cirugia_ocular_previa = sanitizeStringArray(payload.cirugia_ocular_previa).map(compressForApi);
+  const cirugia_ocular = sanitizeStringArray(payload.cirugia_ocular).map(compressForApi);
+
+  const otros_factores = payload.otros_factores ? sanitizeText(payload.otros_factores).slice(0, 500) : '';
 
   const hasOptional = [
     medicamentos, factores_hormonales, factores_ambientales,
-    enfermedades, antecedentes_oculares, cirugia_ocular_previa,
-  ].some(a => a.length > 0);
+    enfermedades, antecedentes_oculares, cirugia_ocular,
+  ].some(a => a.length > 0) || otros_factores.length > 0;
   if (!hasOptional) throw new Error('Selecciona al menos un factor para el análisis de impacto.');
 
-  const body: Record<string, unknown> = { nombre, respuestas };
+  const body: Record<string, unknown> = { nombre, apellidos, edad, sexo, respuestas };
   if (medicamentos.length) body.medicamentos = medicamentos;
   if (factores_hormonales.length) body.factores_hormonales = factores_hormonales;
   if (factores_ambientales.length) body.factores_ambientales = factores_ambientales;
   if (enfermedades.length) body.enfermedades = enfermedades;
   if (antecedentes_oculares.length) body.antecedentes_oculares = antecedentes_oculares;
-  if (cirugia_ocular_previa.length) body.cirugia_ocular_previa = cirugia_ocular_previa;
+  if (cirugia_ocular.length) body.cirugia_ocular = cirugia_ocular;
+  if (otros_factores.length) body.otros_factores = otros_factores;
 
   const controller = new AbortController();
   const timeoutId = window.setTimeout(() => controller.abort(), 20000);
@@ -358,20 +438,16 @@ export async function evaluarImpactoFactores(
   try {
     const response = await fetch(`${getApiBaseUrl()}/api/diagnostico/impacto-factores`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      headers: getApiHeaders(),
       body: JSON.stringify(body),
       signal: controller.signal,
     });
 
+    const requestId = response.headers.get('X-Request-Id');
     const json = (await response.json()) as unknown;
 
     if (!response.ok) {
-      const apiMessage =
-        json && typeof json === 'object' && 'error' in json &&
-        typeof (json as { error?: unknown }).error === 'string'
-          ? (json as { error: string }).error
-          : 'No se pudo procesar el análisis de factores.';
-      throw new Error(apiMessage);
+      throw new Error(extractApiError(json, requestId));
     }
 
     if (!isValidImpactoResponse(json)) {
@@ -384,6 +460,42 @@ export async function evaluarImpactoFactores(
       throw new Error('La solicitud tardó demasiado. Inténtalo de nuevo.');
     }
     throw error;
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+}
+
+export async function guardarFormulario(formulario: FormularioCompleto): Promise<{ success: boolean }> {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 20000);
+
+  try {
+    const response = await fetch(`${getApiBaseUrl()}/api/formulario`, {
+      method: 'POST',
+      headers: getApiHeaders(),
+      body: JSON.stringify(formulario),
+      signal: controller.signal,
+    });
+
+    const requestId = response.headers.get('X-Request-Id');
+    const json = (await response.json()) as unknown;
+
+    if (!response.ok) {
+      throw new Error(extractApiError(json, requestId));
+    }
+
+    if (typeof json !== 'object' || !json || !('success' in json)) {
+      throw new Error('La API devolvio un formato inesperado al guardar el formulario.');
+    }
+
+    return { success: true };
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new Error('La solicitud de guardado tardó demasiado. Intentalo de nuevo.');
+    }
+    // Log del error sin romper el flujo - el formulario ya fue evaluado
+    console.warn('No se pudo guardar el formulario en la base de datos:', error);
+    return { success: false };
   } finally {
     window.clearTimeout(timeoutId);
   }
