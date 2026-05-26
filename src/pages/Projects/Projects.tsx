@@ -48,8 +48,8 @@ export default function Projects() {
               <h2 className="text-2xl md:text-3xl font-bold mt-2 mb-3">{language === 'es' ? 'Portafolio Web Personal' : 'Personal Web Portfolio'}</h2>
               <p className="text-slate-600 dark:text-slate-300">
                 {language === 'es'
-                  ? 'Este espacio queda listo para que muestres una imagen principal del proyecto (mockup general, captura de home o vista de arquitectura).'
-                  : 'This space is ready for you to showcase a main project image (general mockup, home screenshot, or architecture view).'}
+                  ? ' Sitio web de portafolio con routing, diseño responsive, soporte multiidioma y seguimiento de eventos para mostrar proyectos y experiencia.'
+                  : 'Personal web portfolio with routing, responsive design, multi-language support, and event tracking to showcase projects and experience.'}
               </p>
             </div>
 
