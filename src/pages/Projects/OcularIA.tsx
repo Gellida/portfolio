@@ -367,7 +367,7 @@ export default function OcularIA() {
       const secsLeft = Math.ceil((SUBMIT_COOLDOWN_MS - (now - lastSubmitRef.current)) / 1000);
       setStatus('error');
       setErrorMessage(isSpanish
-        ? `Por favor espera ${secsLeft} segundo(s) antes de volver a evaluar.`
+        ? `Por favor espera ${secsLeft} segundo antes de volver a evaluar.`
         : `Please wait ${secsLeft} second(s) before evaluating again.`);
       return;
     }
