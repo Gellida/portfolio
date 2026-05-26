@@ -381,7 +381,7 @@ export default function OcularIA() {
     if (!formData.nombre.trim() || !formData.apellidos.trim() || !formData.fechaNacimiento || !formData.codigoPostal.trim() || edad === null || !Number.isInteger(edad)) {
       setStatus('error');
       setErrorMessage(isSpanish
-        ? 'Completa nombre, apellidos, fecha de nacimiento y código postal válidos.'
+        ? 'Completa nombre, apellidos, fecha de nacimiento y código postal válidos .'
         : 'Please complete first name, last name, valid birth date and postal code.');
       return;
     }
