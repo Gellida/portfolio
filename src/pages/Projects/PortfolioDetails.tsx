@@ -9,7 +9,7 @@ export default function PortfolioDetails() {
   const seo =
     language === 'es'
       ? {
-          title: 'Portafolio web personal',
+          title: 'Portafolio  personal',
           description:
             'Caso de estudio del portafolio web personal de José Gellida: arquitectura, tecnología, evidencias visuales y decisiones de diseño y despliegue.',
         }
