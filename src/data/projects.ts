@@ -26,7 +26,7 @@ export const projects: Project[] = [
   },
   {
     id: '2',
-    title: 'EDA: Análisis de Desigualdad Global',
+    title: 'EDA:  Análisis de Desigualdad Global',
     titleEn: 'EDA: Global Inequality Analysis',
     description: 'Data Story interactivo sobre 227 países del mundo. Análisis exploratorio de patrones económicos, demográficos y sociales con visualizaciones interactivas, pruebas estadísticas (Shapiro-Wilk, Chi-cuadrado, Pearson) y acceso al notebook Jupyter completo.',
     descriptionEn: 'Interactive Data Story about 227 countries. Exploratory data analysis of economic, demographic and social patterns with interactive visualizations, statistical tests (Shapiro-Wilk, Chi-square, Pearson) and access to complete Jupyter notebook.',
