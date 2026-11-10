@@ -3,30 +3,28 @@ import type { Technology } from '../data/technologies';
 import type { IconType } from 'react-icons';
 import { FaAws } from 'react-icons/fa6';
 import {
-  SiAstro,
+  SiCaddy,
+  SiCloudflare,
   SiDocker,
+  SiDotnet,
   SiFastapi,
-  SiFigma,
   SiFirebase,
-  SiFlutter,
   SiGithub,
   SiGithubactions,
   SiHtml5,
-  SiJavascript,
   SiKotlin,
-  SiKubernetes,
-  SiMongodb,
   SiNextdotjs,
-  SiN8N,
   SiNodedotjs,
   SiOpenai,
   SiPandas,
   SiPostgresql,
+  SiPostman,
   SiPython,
   SiReact,
   SiSpring,
   SiTailwindcss,
-  SiTypescript
+  SiTypescript,
+  SiVite
 } from 'react-icons/si';
 
 interface TechCardProps {
@@ -44,29 +42,26 @@ const logos: Record<string, LogoItem> = {
   react: { icon: SiReact, className: 'text-sky-500' },
   nextjs: { icon: SiNextdotjs, className: 'text-slate-900 dark:text-slate-100' },
   typescript: { icon: SiTypescript, className: 'text-blue-600' },
-  javascript: { icon: SiJavascript, className: 'text-yellow-400' },
+  vite: { icon: SiVite, className: 'text-violet-500' },
+  dotnet: { icon: SiDotnet, className: 'text-purple-600' },
   tailwind: { icon: SiTailwindcss, className: 'text-cyan-500' },
   htmlcss: { icon: SiHtml5, className: 'text-orange-500' },
-  figma: { icon: SiFigma, className: 'text-pink-500' },
   python: { icon: SiPython, className: 'text-blue-500' },
   spring: { icon: SiSpring, className: 'text-emerald-600' },
   kotlin: { icon: SiKotlin, className: 'text-violet-500' },
   node: { icon: SiNodedotjs, className: 'text-green-600' },
   fastapi: { icon: SiFastapi, className: 'text-emerald-500' },
   postgresql: { icon: SiPostgresql, className: 'text-blue-700' },
-  mongodb: { icon: SiMongodb, className: 'text-green-600' },
-  dynamodb: { icon: FaAws, className: 'text-orange-500' },
   aws: { icon: FaAws, className: 'text-orange-500' },
   docker: { icon: SiDocker, className: 'text-sky-500' },
+  caddy: { icon: SiCaddy, className: 'text-blue-500' },
+  cloudflare: { icon: SiCloudflare, className: 'text-orange-500' },
+  postman: { icon: SiPostman, className: 'text-orange-500' },
   firebase: { icon: SiFirebase, className: 'text-amber-500' },
   openai: { icon: SiOpenai, className: 'text-emerald-700 dark:text-emerald-400' },
-  n8n: { icon: SiN8N, className: 'text-fuchsia-500' },
   github: { icon: SiGithub, className: 'text-slate-900 dark:text-slate-100' },
   actions: { icon: SiGithubactions, className: 'text-blue-500' },
-  kubernetes: { icon: SiKubernetes, className: 'text-blue-600' },
-  pandas: { icon: SiPandas, className: 'text-indigo-500' },
-  flutter: { icon: SiFlutter, className: 'text-sky-500' },
-  astro: { icon: SiAstro, className: 'text-orange-500' }
+  pandas: { icon: SiPandas, className: 'text-indigo-500' }
 };
 
 function TechCard({ category, technologies, color }: TechCardProps) {

@@ -15,35 +15,35 @@ export const technologies: TechnologiesData = {
     { name: 'React', icon: 'react' },
     { name: 'Next.js', icon: 'nextjs' },
     { name: 'TypeScript', icon: 'typescript' },
-    { name: 'JavaScript', icon: 'javascript' },
     { name: 'TailwindCSS', icon: 'tailwind' },
+    { name: 'Vite', icon: 'vite' },
     { name: 'HTML/CSS', icon: 'htmlcss' },
-    { name: 'Figma', icon: 'figma' }
   ],
   backend: [
     { name: 'Python', icon: 'python' },
-    { name: 'Java (Spring Boot)', icon: 'spring' },
-    { name: 'Kotlin', icon: 'kotlin' },
-    { name: 'Node.js', icon: 'node' },
     { name: 'FastAPI', icon: 'fastapi' },
-    { name: 'PostgreSQL', icon: 'postgresql' },
-    { name: 'MongoDB', icon: 'mongodb' },
-    { name: 'DynamoDB', icon: 'dynamodb' }
+    { name: 'Java (Spring Boot)', icon: 'spring' },
+    { name: 'Node.js / Express', icon: 'node' },
+    { name: 'Kotlin', icon: 'kotlin' },
+    { name: 'C#', icon: 'dotnet' },
+    { name: 'PostgreSQL · MySQL', icon: 'postgresql' },
+    { name: 'REST APIs', icon: 'rest' },
+    { name: 'Microservicios', icon: 'microservices' },
   ],
   tools: [
-    { name: 'AWS (EC2/S3/Lambda)', icon: 'aws' },
     { name: 'Docker', icon: 'docker' },
+    { name: 'Docker Compose', icon: 'docker' },
+    { name: 'Caddy', icon: 'caddy' },
+    { name: 'Cloudflare', icon: 'cloudflare' },
+    { name: 'GitHub Actions', icon: 'actions' },
+    { name: 'AWS (S3 + CloudFront)', icon: 'aws' },
     { name: 'Firebase', icon: 'firebase' },
-    { name: 'OpenAI / LangChain', icon: 'openai' },
-    { name: 'n8n', icon: 'n8n' },
-    { name: 'Git / GitHub', icon: 'github' },
-    { name: 'CI/CD', icon: 'actions' },
-    { name: 'Kubernetes', icon: 'kubernetes' }
+    { name: 'Git', icon: 'github' },
+    { name: 'Postman', icon: 'postman' },
   ],
   learning: [
     { name: 'Ciencia de Datos', icon: 'pandas' },
-    { name: 'Agentes de IA', icon: 'openai' },
-    { name: 'Flutter', icon: 'flutter' },
-    { name: 'Astro', icon: 'astro' }
-  ]
+    { name: 'Pandas · SciPy', icon: 'pandas' },
+    { name: 'Open Data', icon: 'openData' },
+  ],
 };

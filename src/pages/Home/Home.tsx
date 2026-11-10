@@ -6,22 +6,24 @@ import TechCard from '../../components/TechCard';
 import Seo from '../../components/Seo';
 import { projects } from '../../data/projects';
 import { technologies } from '../../data/technologies';
+import { experience, getExperienceYears } from '../../data/experience';
 import { useLanguage } from '../../hooks/useLanguage';
 
 export default function Home() {
   const { language, t } = useLanguage();
+  const experienceYears = getExperienceYears();
 
   const seo =
     language === 'es'
       ? {
-          title: 'Ingeniero de Software Fullstack e IA',
+          title: 'Desarrollador Full-Stack e IA aplicada',
           description:
-            'Portafolio de José Gellida: ingeniero de software enfocado en desarrollo fullstack, automatización, datos e inteligencia artificial aplicada.',
+            'Portafolio de José Gellida: desarrollador full-stack con experiencia en banca, ERP y producto sanitario. Python, FastAPI, Java, React y PostgreSQL.',
         }
       : {
-          title: 'AI-focused Fullstack Software Engineer',
+          title: 'Full-Stack Developer & Applied AI',
           description:
-            'José Gellida portfolio: software engineer focused on fullstack development, automation, data, and applied artificial intelligence.',
+            "José Gellida's portfolio: full-stack developer with experience in banking, ERP and healthcare. Python, FastAPI, Java, React and PostgreSQL.",
         };
 
   return (
@@ -126,21 +128,21 @@ export default function Home() {
                   <span className="text-indigo-500 dark:text-indigo-400">as</span> pd
                 </p>
                 <p>
-                  <span className="text-indigo-500 dark:text-indigo-400">from</span> langchain{' '}
-                  <span className="text-indigo-500 dark:text-indigo-400">import</span> Agent
+                  <span className="text-indigo-500 dark:text-indigo-400">from</span> fastapi{' '}
+                  <span className="text-indigo-500 dark:text-indigo-400">import</span> FastAPI
                 </p>
-                <p className="text-slate-500 dark:text-slate-500">// AI-Driven Engineer profile</p>
+                <p className="text-slate-500 dark:text-slate-500">// Full-Stack & Applied AI profile</p>
                 <p>
                   <span className="text-emerald-600 dark:text-emerald-400">const</span> profile ={' '}{`{`}
                 </p>
                 <p className="pl-4">
-                  stack: <span className="text-amber-600 dark:text-amber-300">'Java · Kotlin · JS'</span>,
+                  stack: <span className="text-amber-600 dark:text-amber-300">'Python · Java · TS'</span>,
                 </p>
                 <p className="pl-4">
-                  ai: <span className="text-amber-600 dark:text-amber-300">'OpenAI · LangChain'</span>,
+                  ai: <span className="text-amber-600 dark:text-amber-300">'FastAPI · LLM + fallback'</span>,
                 </p>
                 <p className="pl-4">
-                  cloud: <span className="text-amber-600 dark:text-amber-300">'AWS · Firebase'</span>
+                  cloud: <span className="text-amber-600 dark:text-amber-300">'Docker · Cloudflare · AWS'</span>
                 </p>
                 <p>{`};`}</p>
                 <p className="pt-2 text-emerald-600 dark:text-emerald-400">{`> Automating at scale...`}</p>
@@ -193,7 +195,7 @@ export default function Home() {
                     Impact
                   </p>
                   <p className="text-5xl leading-none font-black text-slate-900 dark:text-white">
-                    2<span className="text-indigo-500">+</span>
+                    {experienceYears}<span className="text-indigo-500">+</span>
                   </p>
                   <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{t('home.about.experience')}</p>
                 </article>
@@ -204,9 +206,9 @@ export default function Home() {
                     Build
                   </p>
                   <p className="text-5xl leading-none font-black text-slate-900 dark:text-white">
-                    5<span className="text-emerald-500">+</span>
+                    {experience.length}
                   </p>
-                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{t('home.about.completedProjects')}</p>
+                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{t('home.about.roles')}</p>
                 </article>
               </div>
               <Link
@@ -259,21 +261,6 @@ export default function Home() {
             className="inline-flex items-center text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium"
           >
             {t('home.projects.viewAll')} <ChevronRight size={18} className="ml-1" />
-          </Link>
-        </div>
-      </Section>
-
-      {/* Previsualización: Challenges */}
-      <Section title={t('nav.challenges')} subtitle={t('home.challenges.subtitle')}>
-        <div className="grid md:grid-cols-2 gap-6">
-           
-        </div>
-        <div className="mt-6">
-          <Link
-            to="/challenges"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium"
-          >
-            {t('home.challenges.viewAll')} <ChevronRight size={18} className="ml-1" />
           </Link>
         </div>
       </Section>

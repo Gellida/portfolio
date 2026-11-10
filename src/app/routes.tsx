@@ -4,11 +4,10 @@ import Home from '../pages/Home/Home';
 import Projects from '../pages/Projects/Projects';
 import PortfolioDetails from '../pages/Projects/PortfolioDetails.tsx';
 import OcularIA from '../pages/Projects/OcularIA';
-import Challenges from '../pages/Challenges/Challenges';
-import VisualThinking from '../pages/VisualThinking/VisualThinking';
 import About from '../pages/About/About';
 import Contact from '../pages/Contact/Contact';
 import CountriesAnalysis from '../pages/DataStories/CountriesAnalysis';
+import NotFound from '../pages/NotFound/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -28,14 +27,6 @@ export const router = createBrowserRouter([
     element: <Layout><OcularIA /></Layout>,
   },
   {
-    path: '/challenges',
-    element: <Layout><Challenges /></Layout>,
-  },
-  {
-    path: '/visual-thinking',
-    element: <Layout><VisualThinking /></Layout>,
-  },
-  {
     path: '/about',
     element: <Layout><About /></Layout>,
   },
@@ -46,5 +37,9 @@ export const router = createBrowserRouter([
   {
     path: '/data-stories/countries-analysis',
     element: <Layout><CountriesAnalysis /></Layout>,
+  },
+  {
+    path: '*',
+    element: <Layout><NotFound /></Layout>,
   },
 ]);

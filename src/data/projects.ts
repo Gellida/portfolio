@@ -9,37 +9,68 @@ export interface Project {
   link?: string;
   github?: string;
   detailsPath?: string;
+  /** One-line, measurable outcome shown on the card. */
+  highlight?: string;
+  highlightEn?: string;
+  role?: string;
+  roleEn?: string;
+  period?: string;
+  periodEn?: string;
 }
 
 export const projects: Project[] = [
- 
- 
- 
+  {
+    id: '3',
+    title: 'OcularIA: plataforma clínica multi-tenant',
+    titleEn: 'OcularIA: multi-tenant clinical platform',
+    description:
+      'Plataforma para clínicas oftalmológicas con pre-diagnóstico asistido por IA. Un backend sirve proyectos aislados por subdominio y schema, con scoring OSDI, triaje por reglas y extracción de informes PDF y topografías OCT.',
+    descriptionEn:
+      'Platform for ophthalmology clinics with AI-assisted pre-diagnosis. One backend serves projects isolated by subdomain and schema, with OSDI scoring, rule-based triage and extraction from PDF reports and OCT topographies.',
+    technologies: ['FastAPI', 'Next.js', 'PostgreSQL', 'JWT', 'Docker', 'LLM'],
+    link: 'https://ocularia.puentedigital.space',
+    detailsPath: '/projects/ocularia',
+    highlight: '100% cobertura en la lógica clínica · multi-tenant por schema',
+    highlightEn: '100% coverage of clinical logic · schema-level multi-tenancy',
+    role: 'Diseño y desarrollo',
+    roleEn: 'Design & development',
+    period: 'nov 2025 – Actual',
+    periodEn: 'Nov 2025 – Present',
+  },
   {
     id: '1',
     title: 'Portafolio Web Personal',
     titleEn: 'Personal Web Portfolio',
-    description: 'Sitio web de portafolio con routing, diseño responsive, soporte multiidioma y seguimiento de eventos para mostrar proyectos y experiencia.',
-    descriptionEn: 'Portfolio website with routing, responsive design, multi-language support, and event tracking to showcase projects and experience.',
-    technologies: ['React', 'TypeScript', 'Vite', 'TailwindCSS', 'React Router', 'AWS S3'],
-    detailsPath: '/projects/portafolio-web'
+    description:
+      'SPA con arquitectura por capas, i18n propio ES/EN, tema claro/oscuro sin flash, SEO técnico dinámico, analytics y CI/CD con GitHub Actions a AWS S3 + CloudFront con OAC.',
+    descriptionEn:
+      'SPA with layered architecture, custom ES/EN i18n, flash-free light/dark theme, dynamic technical SEO, analytics and GitHub Actions CI/CD to AWS S3 + CloudFront with OAC.',
+    technologies: ['React 19', 'TypeScript', 'Vite', 'TailwindCSS', 'AWS S3', 'CloudFront (OAC)', 'GitHub Actions'],
+    image: 'analytics.png',
+    link: 'https://www.josegellida.com',
+    detailsPath: '/projects/portafolio-web',
+    highlight: '100 Lighthouse · 156 kB gzip',
+    highlightEn: '100 Lighthouse · 156 kB gzip',
+    role: 'Diseño y desarrollo',
+    roleEn: 'Design & development',
+    period: '2025 – 2026',
+    periodEn: '2025 – 2026',
   },
   {
     id: '2',
-    title: 'EDA:  Análisis de Desigualdad Global',
+    title: 'EDA: Análisis de Desigualdad Global',
     titleEn: 'EDA: Global Inequality Analysis',
-    description: 'Data Story interactivo sobre 227 países del mundo. Análisis exploratorio de patrones económicos, demográficos y sociales con visualizaciones interactivas, pruebas estadísticas (Shapiro-Wilk, Chi-cuadrado, Pearson) y acceso al notebook Jupyter completo.',
-    descriptionEn: 'Interactive Data Story about 227 countries. Exploratory data analysis of economic, demographic and social patterns with interactive visualizations, statistical tests (Shapiro-Wilk, Chi-square, Pearson) and access to complete Jupyter notebook.',
-    technologies: ['Python', 'Pandas', 'Seaborn', 'SciPy', 'Plotly', 'React', 'TypeScript', 'Data Science'],
-    detailsPath: '/data-stories/countries-analysis'
+    description:
+      'Data Story interactiva sobre 227 países con análisis exploratorio, contrastes estadísticos (Shapiro-Wilk, chi-cuadrado, Pearson) y notebook reproducible.',
+    descriptionEn:
+      'Interactive data story across 227 countries with exploratory analysis, statistical tests (Shapiro-Wilk, chi-square, Pearson) and a reproducible notebook.',
+    technologies: ['Python', 'Pandas', 'SciPy', 'React', 'Canvas API'],
+    detailsPath: '/data-stories/countries-analysis',
+    highlight: '227 países · 3 familias de contrastes estadísticos',
+    highlightEn: '227 countries · 3 families of statistical tests',
+    role: 'Análisis y visualización',
+    roleEn: 'Analysis & visualisation',
+    period: '2026',
+    periodEn: '2026',
   },
-  {
-    id: '3',
-    title: 'OcularIA: Evaluador de Ojo Seco',
-    titleEn: 'OcularIA: Dry Eye Evaluator',
-    description: 'Cuestionario clínico digital de 6 preguntas que analiza síntomas de ojo seco mediante IA (Claude) y devuelve diagnóstico orientativo, nivel de riesgo y recomendaciones estructuradas.',
-    descriptionEn: 'Digital 6-question clinical questionnaire that analyzes dry-eye symptoms with AI (Claude) and returns an indicative diagnosis, risk level, and structured recommendations.',
-    technologies: ['React', 'TypeScript', 'IA', 'Claude API', 'Clinical Questionnaire', 'Secure Validation'],
-    detailsPath: '/projects/ocularia'
-  }
 ];

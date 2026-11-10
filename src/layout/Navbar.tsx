@@ -14,8 +14,6 @@ export default function Navbar() {
     () => [
       { to: '/', label: t('nav.home') },
       { to: '/projects', label: t('nav.projects') },
-      { to: '/challenges', label: t('nav.challenges') },
-      { to: '/visual-thinking', label: t('nav.visualThinking') },
       { to: '/about', label: t('nav.about') },
       { to: '/contact', label: t('nav.contact') },
     ],

@@ -63,10 +63,10 @@ src/
 ├── pages/               # Páginas principales
 │   ├── Home/           
 │   ├── Projects/       
-│   ├── Challenges/     
-│   ├── VisualThinking/ 
+│   ├── DataStories/    
 │   ├── About/          
-│   └── Contact/        
+│   ├── Contact/        
+│   └── NotFound/       
 ├── components/          # Componentes reutilizables
 │   ├── Section.tsx     
 │   ├── ProjectCard.tsx 
@@ -75,10 +75,12 @@ src/
 │   ├── Layout.tsx      
 │   ├── Navbar.tsx      
 │   └── Footer.tsx      
-├── data/                # Datos estáticos
+├── data/                # Datos estáticos (fuente de verdad del CV)
+│   ├── profile.ts      # Identidad, ubicación, permiso, formación
+│   ├── experience.ts   # Experiencia profesional y periodos
+│   ├── skills.ts       # Grupos de habilidades
 │   ├── technologies.ts 
-│   ├── projects.ts     
-│   └── challenges.ts   
+│   └── projects.ts     
 └── main.tsx             # Punto de entrada
 ```
 
@@ -88,15 +90,18 @@ src/
 
 | Archivo | Descripción |
 |---------|-------------|
-| `src/data/technologies.ts` | Lista de tecnologías y habilidades |
+| `src/data/profile.ts` | Identidad, ubicación, permiso de trabajo y formación |
+| `src/data/experience.ts` | Experiencia profesional con fechas y bullets |
+| `src/data/skills.ts` | Grupos de habilidades alineados al CV |
+| `src/data/technologies.ts` | Stack mostrado en la home |
 | `src/data/projects.ts` | Proyectos destacados del portfolio |
-| `src/data/challenges.ts` | Retos y ejercicios realizados |
 
 
 ### Información Personal
 
 Más información en:
-- [src/pages/About/About.tsx](src/pages/About/About.tsx) - Biografía y experiencia
+- [src/data/profile.ts](src/data/profile.ts) - Datos personales, formación y enlaces
+- [src/data/experience.ts](src/data/experience.ts) - Experiencia profesional
 - [src/pages/Contact/Contact.tsx](src/pages/Contact/Contact.tsx) - Datos de contacto
 - [src/layout/Footer.tsx](src/layout/Footer.tsx) - Enlaces de redes sociales
 

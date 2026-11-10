@@ -22,41 +22,43 @@ export default function PortfolioDetails() {
   const tools =
     language === 'es'
       ? [
-          'AWS (S3, CloudFront) para hosting y despliegue del sitio',
-          'React + TypeScript para componentes tipados y mantenibles',
-          'TailwindCSS para estilos utilitarios y responsive design',
-          'React Router para navegación multipágina',
-          'Lucide React para iconografía consistente',
+          'React 19 + TypeScript + Vite para una SPA tipada y ligera',
+          'TailwindCSS para estilos utilitarios y diseño responsive',
+          'React Router 7 para navegación multipágina y ruta 404',
+          'i18n propio ES/EN con SEO dinámico por ruta',
+          'Tema claro/oscuro sin flash y componentes accesibles',
+          'Google Analytics (eventos) para medir la interacción con proyectos',
+          'CI/CD con GitHub Actions a AWS S3 + CloudFront con OAC',
+          'Políticas de seguridad y cache-control en la distribución CloudFront',
           'ESLint para reglas de calidad de código',
-          'Google Analytics (eventos) para seguimiento de interacción en enlaces de proyectos',
-          'Configuración de despliegue estático (S3/redirects) para hosting del sitio',
         ]
       : [
-          'AWS (S3, CloudFront) for site hosting and deployment',
-          'React + TypeScript for typed and maintainable components',
+          'React 19 + TypeScript + Vite for a typed, lightweight SPA',
           'TailwindCSS for utility-first styles and responsive design',
-          'React Router for multi-page navigation',
-          'Lucide React for consistent iconography',
+          'React Router 7 for multi-page navigation and a 404 route',
+          'Custom ES/EN i18n with per-route dynamic SEO',
+          'Flash-free light/dark theme and accessible components',
+          'Google Analytics (events) to measure project interactions',
+          'CI/CD with GitHub Actions to AWS S3 + CloudFront with OAC',
+          'Security and cache-control policies on the CloudFront distribution',
           'ESLint for code quality rules',
-          'Google Analytics (events) to track interactions on project links',
-          'Static deployment setup (S3/redirects) for site hosting',
         ];
 
   const highlights =
     language === 'es'
       ? [
-          'Arquitectura por secciones y páginas con componentes reutilizables.',
-          'Modo claro/oscuro y estilo visual coherente en toda la navegación.',
-          'Tarjetas de proyectos y tecnologías alimentadas por archivos de datos.',
-          'Enrutado declarativo para escalar nuevas vistas sin acoplar la UI.',
-          'Base preparada para incorporar nuevos proyectos y casos de estudio.',
+          'SPA React 19 + TypeScript con arquitectura por secciones y componentes reutilizables.',
+          'i18n propio ES/EN y SEO técnico dinámico por ruta, con canonical y Open Graph.',
+          'Tema claro/oscuro sin flash, ruta 404 bilingüe y componentes accesibles.',
+          'CI/CD con GitHub Actions hacia AWS S3 + CloudFront con OAC.',
+          '100 de rendimiento en Lighthouse sobre el build de producción.',
         ]
       : [
-          'Section-based architecture with reusable page components.',
-          'Light/dark mode and consistent visual style across navigation.',
-          'Project and technology cards powered by data files.',
-          'Declarative routing to scale new views without coupling UI.',
-          'Foundation ready to add new projects and case studies.',
+          'React 19 + TypeScript SPA with section-based architecture and reusable components.',
+          'Custom ES/EN i18n and per-route dynamic technical SEO, with canonical and Open Graph.',
+          'Flash-free light/dark theme, bilingual 404 route and accessible components.',
+          'GitHub Actions CI/CD to AWS S3 + CloudFront with OAC.',
+          'Lighthouse performance score of 100 on the production build.',
         ];
 
   const imageSlots = [
@@ -80,11 +82,6 @@ export default function PortfolioDetails() {
       src: import.meta.env.BASE_URL + 'web_lighthouse.png',
       fit: 'contain',
       position: 'top',
-    },
-    {
-      title: language === 'es' ? 'Diseño UI' : 'UI Design',
-      hint: language === 'es' ? 'Espacio libre para siguiente imagen' : 'Open space for next image',
-      src: '',
     },
   ];
 
@@ -132,7 +129,7 @@ export default function PortfolioDetails() {
 
       <Section
         title={language === 'es' ? 'Galería de evidencias' : 'Evidence gallery'}
-        subtitle={language === 'es' ? 'Espacios listos para tus imágenes clave' : 'Spaces ready for your key images'}
+        subtitle={language === 'es' ? 'Capturas reales del proyecto' : 'Real screenshots from the project'}
       >
         <div className="grid md:grid-cols-2 gap-6">
           {imageSlots.map((slot) => (

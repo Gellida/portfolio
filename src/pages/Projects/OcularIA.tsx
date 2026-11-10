@@ -514,11 +514,137 @@ export default function OcularIA() {
           </h1>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
             {isSpanish
-              ? 'Cuestionario de 6 preguntas. Análisis clínico orientativo generado por IA en segundos.'
-              : '6-question clinical questionnaire. AI-generated indicative analysis in seconds.'}
+              ? 'Cuestionario de 6 preguntas con pre-diagnóstico orientativo generado por IA en segundos.'
+              : '6-question questionnaire with AI-generated indicative pre-diagnosis in seconds.'}
           </p>
         </div>
       </div>
+
+      {/* Caso de estudio */}
+      <section className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="mx-auto max-w-5xl px-6 py-14">
+          <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h2 className="font-display text-2xl font-bold text-slate-900 dark:text-white md:text-3xl">
+                {isSpanish ? 'Caso de estudio' : 'Case study'}
+              </h2>
+              <p className="mt-1 max-w-xl text-slate-500 dark:text-slate-400">
+                {isSpanish
+                  ? 'Plataforma multi-tenant (FastAPI + Next.js + PostgreSQL). Esta página es la demo interactiva del producto.'
+                  : "Multi-tenant platform (FastAPI + Next.js + PostgreSQL). This page is the product's interactive demo."}
+              </p>
+            </div>
+            <a
+              href="https://ocularia.puentedigital.space"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-lg bg-cyan-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-cyan-700"
+            >
+              {isSpanish ? 'Ver producto en vivo' : 'View live product'} ↗
+            </a>
+          </div>
+
+          <div className="mb-8 flex flex-wrap gap-2">
+            {[
+              'FastAPI',
+              'Next.js',
+              'PostgreSQL',
+              'JWT',
+              'Docker Compose',
+              'Caddy',
+              'Cloudflare Tunnel',
+              'GitHub Actions',
+              'LLM',
+            ].map((tech) => (
+              <span
+                key={tech}
+                className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <dl className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                value: '100%',
+                label: isSpanish ? 'Cobertura en lógica clínica' : 'Coverage of clinical logic',
+                note: isSpanish ? 'Test suite parametrizada' : 'Parametrised test suite',
+              },
+              {
+                value: 'Multi-tenant',
+                label: isSpanish ? 'Subdominio + schema' : 'Subdomain + schema',
+                note: isSpanish ? 'Un backend, proyectos aislados' : 'One backend, isolated projects',
+              },
+              {
+                value: 'Fallback',
+                label: isSpanish ? 'Determinista' : 'Deterministic',
+                note: isSpanish ? 'Funciona sin API key' : 'Works without an API key',
+              },
+              {
+                value: 'PDF',
+                label: isSpanish ? 'Extracción de datos' : 'Data extraction',
+                note: isSpanish ? 'Informes PDF y topografías OCT' : 'PDF reports and OCT topographies',
+              },
+            ].map((metric) => (
+              <div
+                key={metric.label}
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/50"
+              >
+                <dt className="text-sm font-semibold text-cyan-600 dark:text-cyan-400">
+                  {metric.value}
+                </dt>
+                <dd className="mt-1 font-bold text-slate-900 dark:text-white">{metric.label}</dd>
+                <dd className="mt-1 text-xs text-slate-500 dark:text-slate-400">{metric.note}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                title: isSpanish ? 'Aislamiento por proyecto' : 'Project isolation',
+                body: isSpanish
+                  ? 'Arquitectura multi-tenant en producción: cada clínica accede por su subdominio y su schema de PostgreSQL, con JWT acotado al proyecto.'
+                  : 'Multi-tenant architecture in production: each clinic accesses through its own subdomain and PostgreSQL schema, with project-scoped JWT.',
+              },
+              {
+                title: isSpanish ? 'Scoring OSDI + triaje' : 'OSDI scoring + triage',
+                body: isSpanish
+                  ? 'Motor de puntuación clínica y reglas de derivación cubiertos al 100% por tests parametrizados.'
+                  : 'Clinical scoring engine and referral rules covered 100% by parametrised tests.',
+              },
+              {
+                title: isSpanish ? 'LLM con red de seguridad' : 'LLM with a safety net',
+                body: isSpanish
+                  ? 'Agentes y Skills, diseño de prompts y extracción estructurada desde PDF y OCT, con fallback determinista si no hay API key.'
+                  : 'Agents and Skills, prompt design and structured extraction from PDF and OCT, with a deterministic fallback when no API key is available.',
+              },
+              {
+                title: isSpanish ? 'Trazabilidad y monitorización' : 'Traceability and monitoring',
+                body: isSpanish
+                  ? 'Backend con request-id, logging estructurado con pino y monitorización de las APIs de IA para garantizar disponibilidad.'
+                  : 'Backend with request-id, structured logging with pino and AI API monitoring to guarantee availability.',
+              },
+            ].map((card) => (
+              <article
+                key={card.title}
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/50"
+              >
+                <h3 className="mb-1 font-bold text-slate-900 dark:text-white">{card.title}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300">{card.body}</p>
+              </article>
+            ))}
+          </div>
+
+          <p className="mt-6 text-xs text-slate-500 dark:text-slate-400">
+            {isSpanish
+              ? 'Repositorio privado. Arquitectura y demo disponibles bajo petición.'
+              : 'Private repository. Architecture and demo available on request.'}
+          </p>
+        </div>
+      </section>
 
       {/* Wizard content */}
       <div className="max-w-5xl mx-auto px-6 py-12 lg:py-16">
